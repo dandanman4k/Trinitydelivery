@@ -5,6 +5,7 @@ const addItemBtn = document.getElementById("addItemBtn");
 const editModal = document.getElementById("editModal");
 const editName = document.getElementById("editName");
 const editAmount = document.getElementById("editAmount");
+const editPrice = document.getElementById("editPrice");
 const saveEditBtn = document.getElementById("saveEditBtn");
 const cancelEditBtn = document.getElementById("cancelEditBtn");
 
@@ -22,9 +23,9 @@ function renderItems(items) {
   items.forEach(item => {
     const li = document.createElement("li");
     li.innerHTML = `
-      <span>${item.name} (${item.amount})</span>
+      <span>${item.name} (${item.amount}) Price:${item.price}</span>
       <div>
-        <button onclick="editItem(${item.id}, '${item.name}', ${item.amount})">✏️ Edit</button>
+        <button onclick="editItem(${item.id}, '${item.name}', ${item.amount}, ${item.price})">✏️ Edit</button>
         <button onclick="deleteItem(${item.id})">🗑️ Delete</button>
       </div>
     `;
@@ -36,22 +37,24 @@ function renderItems(items) {
 addItemBtn.addEventListener("click", async () => {
   const name = prompt("Enter item name:");
   const amount = parseInt(prompt("Enter amount:"), 10) || 0;
+  const price = parseInt(prompt("Enter Price:"), 10) || 0;
 
   if (name) {
     await fetch("/api/items", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ name, amount })
+      body: JSON.stringify({ name, amount, price })
     });
     loadItems();
   }
 });
 
 // Edit item
-window.editItem = (id, name, amount) => {
+window.editItem = (id, name, amount, price) => {
   currentEditId = id;
   editName.value = name;
   editAmount.value = amount;
+  editPrice.value = price;
   editModal.style.display = "flex";
 };
 
@@ -61,7 +64,8 @@ saveEditBtn.addEventListener("click", async () => {
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
       name: editName.value,
-      amount: parseInt(editAmount.value, 10) || 0
+      amount: parseInt(editAmount.value, 10) || 0,
+      price: parseInt(editPrice.value, 10) || 0
     })
   });
   editModal.style.display = "none";

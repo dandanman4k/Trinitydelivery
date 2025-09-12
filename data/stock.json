@@ -2,21 +2,31 @@
   {
     "id": 1,
     "name": "Apple",
-    "amount": 6
+    "amount": 6,
+    "price": 3500
   },
   {
     "id": 2,
     "name": "Banana",
-    "amount": 5
+    "amount": 5,
+    "price": 4999
   },
   {
     "id": 3,
     "name": "Cherry",
-    "amount": 20
+    "amount": 20,
+    "price": 4999
   },
   {
     "id": 1757698290171,
     "name": "Mango",
-    "amount": 15
+    "amount": 15,
+    "price": 4999
+  },
+  {
+    "id": 1757700534603,
+    "name": "Balls",
+    "amount": 5,
+    "price": 1000
   }
 ]

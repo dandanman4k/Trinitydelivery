@@ -25,6 +25,7 @@ app.post("/api/items", (req, res) => {
     id: Date.now(),
     name: req.body.name,
     amount: req.body.amount || 0,
+    price: req.body.price || 0,
   };
   items.push(newItem);
   writeData(items);
@@ -42,6 +43,7 @@ app.put("/api/items/:id", (req, res) => {
     ...items[itemIndex],
     name: req.body.name,
     amount: req.body.amount,
+    price: req.body.price,
   };
 
   writeData(items);
