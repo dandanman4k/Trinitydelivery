@@ -1,38 +1,38 @@
 [
-    {
-        "id": 0,
-        "drug": "Balls",
-        "amount": 2,
-        "customerName": "John doe",
-        "location": "Bajjo",
-        "phoneNumber": 7999998778,
-        "orderFilled": false
-    },
-    {
-        "id": 1,
-        "drug": "Apple",
-        "amount": 7,
-        "customerName": "Micheal Rob",
-        "location": "Bajjo",
-        "phoneNumber": 7999998778,
-        "orderFilled": false
-    },
-    {
-        "id": 2,
-        "drug": "Cherry",
-        "amount": 1,
-        "customerName": "Josh Williams",
-        "location": "Bajjo",
-        "phoneNumber": 7999998778,
-        "orderFilled": false
-    },
-    {
-        "id": 3,
-        "drug": "Balls",
-        "amount": 5,
-        "customerName": "Brian Mashal",
-        "location": "Bajjo",
-        "phoneNumber": 7999998778,
-        "orderFilled": false
-    }
+  {
+    "id": 0,
+    "drug": "Balls",
+    "amount": 2,
+    "customerName": "John doe",
+    "location": "Bajjo",
+    "phoneNumber": 7999998778,
+    "orderFilled": true
+  },
+  {
+    "id": 1,
+    "drug": "Apple",
+    "amount": 7,
+    "customerName": "Micheal Rob",
+    "location": "Bajjo",
+    "phoneNumber": 7999998778,
+    "orderFilled": false
+  },
+  {
+    "id": 2,
+    "drug": "Cherry",
+    "amount": 1,
+    "customerName": "Josh Williams",
+    "location": "Bajjo",
+    "phoneNumber": 7999998778,
+    "orderFilled": false
+  },
+  {
+    "id": 3,
+    "drug": "Balls",
+    "amount": 5,
+    "customerName": "Brian Mashal",
+    "location": "Bajjo",
+    "phoneNumber": 7999998778,
+    "orderFilled": false
+  }
 ]
