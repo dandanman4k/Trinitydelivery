@@ -5,6 +5,7 @@ const bodyParser = require("body-parser");
 const fs = require("fs");
 
 const dataFile = path.join(__dirname, "data", "stock.json");
+const orderData = path.join(__dirname, "data", "orders.json");
 
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, "Pages")));
@@ -13,9 +14,17 @@ app.use(express.static(path.join(__dirname, "Pages")));
 const readData = () => JSON.parse(fs.readFileSync(dataFile, "utf8"));
 const writeData = (data) => fs.writeFileSync(dataFile, JSON.stringify(data, null, 2));
 
+const readOrderData = () => JSON.parse(fs.readFileSync(orderData, "utf8"));
+const writeOrderData = (data) => fs.writeFileSync(orderData, JSON.stringify(data, null, 2));
+
+
 // Get all items
 app.get("/api/items", (req, res) => {
   res.json(readData());
+});
+
+app.get("/api/orders", (req, res) => {
+  res.json(readOrderData());
 });
 
 // Add new item
@@ -29,6 +38,22 @@ app.post("/api/items", (req, res) => {
   };
   items.push(newItem);
   writeData(items);
+  res.json(newItem);
+});
+
+app.post("/api/orders", (req, res) => {
+  const items = readOrderData();
+  const newItem = {
+    id: Date.now(),
+    drug: req.body.drug,
+    amount: req.body.amount || 0,
+    customerName: req.body.customerName,
+    location: req.body.location,
+    phoneNumber: req.body.phoneNumber,
+    orderFilled: req.body.orderFilled
+  };
+  items.push(newItem);
+  writeOrderData(items);
   res.json(newItem);
 });
 
@@ -50,6 +75,26 @@ app.put("/api/items/:id", (req, res) => {
   res.json(items[itemIndex]);
 });
 
+app.put("/api/orders/:id", (req, res) => {
+  const items = readOrderData();
+  const itemIndex = items.findIndex((i) => i.id == req.params.id);
+
+  if (itemIndex === -1) return res.status(404).json({ error: "Item not found" });
+
+  items[itemIndex] = {
+    ...items[itemIndex],
+    drug: req.body.drug,
+    amount: req.body.amount,
+    customerName: req.body.customerName,
+    location: req.body.location,
+    phoneNumber: req.body.phoneNumber,
+    orderFilled: req.body.orderFilled
+  };
+
+  writeOrderData(items);
+  res.json(items[itemIndex]);
+});
+
 // Delete item
 app.delete("/api/items/:id", (req, res) => {
   let items = readData();
@@ -58,11 +103,19 @@ app.delete("/api/items/:id", (req, res) => {
   res.json({ success: true });
 });
 
+app.delete("/api/orders/:id", (req, res) => {
+  let items = readData();
+  items = items.filter((i) => i.id != req.params.id);
+  writeData(items);
+  res.json({ success: true });
+});
+
+
 app.get("/Stock", (req, res) => {
   res.sendFile(path.join(__dirname, "Pages", "stock.html"));
 });
 
-app.get("/Orders", (req, res) => {
+app.get("/Order", (req, res) => {
   res.sendFile(path.join(__dirname, "Pages", "orders.html"));
 });
 

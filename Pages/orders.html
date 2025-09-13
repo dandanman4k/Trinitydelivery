@@ -11,16 +11,34 @@
   <!-- Sidebar -->
   <div class="sidebar">
     <a href="/index">Home</a>
-    <a href="/stock">Stock</a>
-    <a href="/orders" class="active">Orders</a>
+    <a href="/Stock">Stock</a>
+    <a href="/Order" class="active">Orders</a>
     <a href="/contact">Contact</a>
   </div>
 
-  <!-- Content -->
+<!-- Content -->
   <div class="content">
-    <h1>About Us</h1>
-    <p>This is the about page content.</p>
+    <div class="search-container">
+      <input type="text" id="searchInput" placeholder="Search items...">
+    </div>
+
+    <button id="addItemBtn">➕ Add Item</button>
+
+    <ul id="itemList"></ul>
   </div>
 
+  <!-- Edit Modal -->
+  <div id="editModal" class="modal" style="display:none;">
+    <div class="modal-content">
+      <h2>Edit Item</h2>
+      <input type="text" id="editName" placeholder="Item name">
+      <input type="number" id="editAmount" placeholder="Amount">
+      <input type="number" id="editPrice" placeholder="Price">
+      <button id="saveEditBtn">💾 Save</button>
+      <button id="cancelEditBtn">❌ Cancel</button>
+    </div>
+  </div>
+
+  <script src="/scriptorders.js"></script>
 </body>
 </html>
