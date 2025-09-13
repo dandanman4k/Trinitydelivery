@@ -14,17 +14,26 @@ app.use(express.static(path.join(__dirname, "Pages")));
 const readData = () => JSON.parse(fs.readFileSync(dataFile, "utf8"));
 const writeData = (data) => fs.writeFileSync(dataFile, JSON.stringify(data, null, 2));
 
-const readOrderData = () => JSON.parse(fs.readFileSync(orderData, "utf8"));
-const writeOrderData = (data) => fs.writeFileSync(orderData, JSON.stringify(data, null, 2));
+function readJson(file) {
+  try {
+    return JSON.parse(fs.readFileSync(file, "utf8"));
+  } catch (err) {
+    console.error("❌ Error reading file:", file, err);
+    return [];
+  }
+}
 
+function writeJson(file, data) {
+  try {
+    fs.writeFileSync(file, JSON.stringify(data, null, 2));
+  } catch (err) {
+    console.error("❌ Error writing file:", file, err);
+  }
+}
 
 // Get all items
 app.get("/api/items", (req, res) => {
   res.json(readData());
-});
-
-app.get("/api/orders", (req, res) => {
-  res.json(readOrderData());
 });
 
 // Add new item
@@ -38,22 +47,6 @@ app.post("/api/items", (req, res) => {
   };
   items.push(newItem);
   writeData(items);
-  res.json(newItem);
-});
-
-app.post("/api/orders", (req, res) => {
-  const items = readOrderData();
-  const newItem = {
-    id: Date.now(),
-    drug: req.body.drug,
-    amount: req.body.amount || 0,
-    customerName: req.body.customerName,
-    location: req.body.location,
-    phoneNumber: req.body.phoneNumber,
-    orderFilled: req.body.orderFilled
-  };
-  items.push(newItem);
-  writeOrderData(items);
   res.json(newItem);
 });
 
@@ -75,26 +68,6 @@ app.put("/api/items/:id", (req, res) => {
   res.json(items[itemIndex]);
 });
 
-app.put("/api/orders/:id", (req, res) => {
-  const items = readOrderData();
-  const itemIndex = items.findIndex((i) => i.id == req.params.id);
-
-  if (itemIndex === -1) return res.status(404).json({ error: "Item not found" });
-
-  items[itemIndex] = {
-    ...items[itemIndex],
-    drug: req.body.drug,
-    amount: req.body.amount,
-    customerName: req.body.customerName,
-    location: req.body.location,
-    phoneNumber: req.body.phoneNumber,
-    orderFilled: req.body.orderFilled
-  };
-
-  writeOrderData(items);
-  res.json(items[itemIndex]);
-});
-
 // Delete item
 app.delete("/api/items/:id", (req, res) => {
   let items = readData();
@@ -103,10 +76,71 @@ app.delete("/api/items/:id", (req, res) => {
   res.json({ success: true });
 });
 
+// --- Orders Routes ---
+const ordersFile = path.join(__dirname, "data", "orders.json");
+const stockFile = path.join(__dirname, "data", "stock.json");
+
+// Get all orders
+app.get("/api/orders", (req, res) => {
+  res.json(readJson(ordersFile));
+});
+
+// Add new order
+app.post("/api/orders", (req, res) => {
+  const orders = readJson(ordersFile);
+  const newOrder = {
+    id: Date.now(),
+    customerName: req.body.customerName,
+    drug: req.body.drug,
+    amount: req.body.amount,
+    location: req.body.location,
+    phoneNumber: req.body.phoneNumber,
+    orderFilled: false,
+  };
+  orders.push(newOrder);
+  writeJson(ordersFile, orders);
+  res.json(newOrder);
+});
+
+// Update order (edit details)
+app.put("/api/orders/:id", (req, res) => {
+  const orders = readJson(ordersFile);
+  const idx = orders.findIndex(o => o.id == req.params.id);
+  if (idx === -1) return res.status(404).json({ error: "Order not found" });
+
+  orders[idx] = { ...orders[idx], ...req.body };
+  writeJson(ordersFile, orders);
+  res.json(orders[idx]);
+});
+
+// Fill order
+app.put("/api/orders/:id/fill", (req, res) => {
+  const orders = readJson(ordersFile);
+  const stock = readJson(stockFile);
+
+  const order = orders.find(o => o.id == req.params.id);
+  if (!order) return res.status(404).json({ error: "Order not found" });
+  if (order.orderFilled) return res.status(400).json({ error: "Already filled" });
+
+  const drug = stock.find(s => s.name.toLowerCase() === order.drug.toLowerCase());
+  if (!drug || drug.amount < order.amount) {
+    return res.status(400).json({ error: "Not enough stock" });
+  }
+
+  drug.amount -= order.amount;
+  order.orderFilled = true;
+
+  writeJson(stockFile, stock);
+  writeJson(ordersFile, orders);
+
+  res.json(order);
+});
+
+// Delete order
 app.delete("/api/orders/:id", (req, res) => {
-  let items = readData();
-  items = items.filter((i) => i.id != req.params.id);
-  writeData(items);
+  let orders = readJson(ordersFile);
+  orders = orders.filter(o => o.id != req.params.id);
+  writeJson(ordersFile, orders);
   res.json({ success: true });
 });
 

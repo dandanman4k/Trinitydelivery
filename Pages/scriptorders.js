@@ -1,95 +1,116 @@
 const itemList = document.getElementById("itemList");
 const searchInput = document.getElementById("searchInput");
-const addItemBtn = document.getElementById("addItemBtn");
+const toggleFilledBtn = document.createElement("button");
+toggleFilledBtn.textContent = "Show Filled Orders";
+document.querySelector(".content").insertBefore(toggleFilledBtn, itemList);
 
 const editModal = document.getElementById("editModal");
-const editName = document.getElementById("editName");
+const editCustomerName = document.getElementById("editCustomerName");
+const editDrug = document.getElementById("editDrug");
 const editAmount = document.getElementById("editAmount");
-const editPrice = document.getElementById("editPrice");
+const editLocation = document.getElementById("editLocation");
+const editPhone = document.getElementById("editPhone");
 const saveEditBtn = document.getElementById("saveEditBtn");
 const cancelEditBtn = document.getElementById("cancelEditBtn");
 
 let currentEditId = null;
+let showFilled = false; // toggle state
 
-// Fetch and render items
-async function loadItems() {
-  const res = await fetch("/api/items");
-  const items = await res.json();
-  renderItems(items);
+// Fetch and render orders
+async function loadOrders() {
+  const res = await fetch("/api/orders");
+  let orders = await res.json();
+  orders = orders.filter(o => o.orderFilled === showFilled);
+  renderOrders(orders);
 }
 
-function renderItems(items) {
+function renderOrders(orders) {
   itemList.innerHTML = "";
-  items.forEach(item => {
+  orders.forEach(o => {
     const li = document.createElement("li");
     li.innerHTML = `
-      <span>${item.name} (${item.amount}) Price:${item.price}</span>
       <div>
-        <button onclick="editItem(${item.id}, '${item.name}', ${item.amount}, ${item.price})">✏️ Edit</button>
-        <button onclick="deleteItem(${item.id})">🗑️ Delete</button>
+        <strong>${o.customerName}</strong> ordered <strong>${o.amount}</strong> of <strong>${o.drug}</strong><br>
+        📍 Location: ${o.location} | 📞 Phone: ${o.phoneNumber}<br>
+        Status: ${o.orderFilled ? "✅ Filled" : "❌ Not filled"}
+      </div>
+      <div>
+        <button onclick="editOrder(${o.id})">✏️ Edit</button>
+        <button onclick="deleteOrder(${o.id})">🗑️ Delete</button>
+        ${!o.orderFilled ? `<button onclick="fillOrder(${o.id})">✔️ Fill</button>` : ""}
       </div>
     `;
     itemList.appendChild(li);
   });
 }
 
-// Add item
-addItemBtn.addEventListener("click", async () => {
-  const name = prompt("Enter item name:");
-  const amount = parseInt(prompt("Enter amount:"), 10) || 0;
-  const price = parseInt(prompt("Enter Price:"), 10) || 0;
+// Edit order
+window.editOrder = async (id) => {
+  const res = await fetch("/api/orders");
+  const orders = await res.json();
+  const order = orders.find(o => o.id === id);
+  if (!order) return;
 
-  if (name) {
-    await fetch("/api/items", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ name, amount, price })
-    });
-    loadItems();
-  }
-});
-
-// Edit item
-window.editItem = (id, name, amount, price) => {
   currentEditId = id;
-  editName.value = name;
-  editAmount.value = amount;
-  editPrice.value = price;
+  editCustomerName.value = order.customerName;
+  editDrug.value = order.drug;
+  editAmount.value = order.amount;
+  editLocation.value = order.location;
+  editPhone.value = order.phoneNumber;
   editModal.style.display = "flex";
 };
 
 saveEditBtn.addEventListener("click", async () => {
-  await fetch(`/api/items/${currentEditId}`, {
+  await fetch(`/api/orders/${currentEditId}`, {
     method: "PUT",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
-      name: editName.value,
+      customerName: editCustomerName.value,
+      drug: editDrug.value,
       amount: parseInt(editAmount.value, 10) || 0,
-      price: parseInt(editPrice.value, 10) || 0
-    })
+      location: editLocation.value,
+      phoneNumber: editPhone.value,
+    }),
   });
   editModal.style.display = "none";
-  loadItems();
+  loadOrders();
 });
 
 cancelEditBtn.addEventListener("click", () => {
   editModal.style.display = "none";
 });
 
-// Delete item
-window.deleteItem = async (id) => {
-  await fetch(`/api/items/${id}`, { method: "DELETE" });
-  loadItems();
+// Delete order
+window.deleteOrder = async (id) => {
+  await fetch(`/api/orders/${id}`, { method: "DELETE" });
+  loadOrders();
 };
+
+// Fill order
+window.fillOrder = async (id) => {
+  await fetch(`/api/orders/${id}/fill`, { method: "PUT" });
+  loadOrders();
+};
+
+// Toggle filled/unfilled
+toggleFilledBtn.addEventListener("click", () => {
+  showFilled = !showFilled;
+  toggleFilledBtn.textContent = showFilled ? "Show Unfilled Orders" : "Show Filled Orders";
+  loadOrders();
+});
 
 // Search filter
 searchInput.addEventListener("keyup", async () => {
-  const res = await fetch("/api/items");
-  let items = await res.json();
+  const res = await fetch("/api/orders");
+  let orders = await res.json();
   const filter = searchInput.value.toLowerCase();
-  items = items.filter(i => i.name.toLowerCase().includes(filter));
-  renderItems(items);
+  orders = orders.filter(o =>
+    (o.customerName && o.customerName.toLowerCase().includes(filter)) ||
+    (o.drug && o.drug.toLowerCase().includes(filter))
+  );
+  orders = orders.filter(o => o.orderFilled === showFilled);
+  renderOrders(orders);
 });
 
 // Initial load
-loadItems();
+loadOrders();
