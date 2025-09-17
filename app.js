@@ -44,6 +44,9 @@ app.post("/api/items", (req, res) => {
     name: req.body.name,
     amount: req.body.amount || 0,
     price: req.body.price || 0,
+    catagory: req.body.catagory,
+    image: req.body.image,
+    description: req.body.description
   };
   items.push(newItem);
   writeData(items);
@@ -62,6 +65,9 @@ app.put("/api/items/:id", (req, res) => {
     name: req.body.name,
     amount: req.body.amount,
     price: req.body.price,
+    catagory: req.body.catagory,
+    image: req.body.image,
+    description: req.body.description
   };
 
   writeData(items);

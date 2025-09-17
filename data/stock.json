@@ -3,29 +3,41 @@
     "id": 1,
     "name": "Apple",
     "amount": 6,
-    "price": 3500
+    "price": 3610
   },
   {
     "id": 2,
     "name": "Banana",
+    "catagory": "Furits",
+    "image": "sdgdf",
+    "description": "fgdfgd",
     "amount": 5,
-    "price": 4999
+    "price": 5000
   },
   {
     "id": 3,
     "name": "Cherry",
+    "catagory": "Furits",
+    "image": "fgd",
+    "description": "dsgfth",
     "amount": 20,
-    "price": 4999
+    "price": 6000
   },
   {
     "id": 1757698290171,
     "name": "Mango",
+    "catagory": "Furits",
+    "image": "tjyfgh",
+    "description": "jyfhjyuj",
     "amount": 15,
-    "price": 4999
+    "price": 7000
   },
   {
     "id": 1757700534603,
     "name": "Balls",
+    "catagory": "items",
+    "image": "ftjyjtf",
+    "description": "jtyjfhg",
     "amount": 3,
     "price": 1000
   }

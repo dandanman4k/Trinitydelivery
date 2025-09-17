@@ -10,6 +10,9 @@ const saveEditBtn = document.getElementById("saveEditBtn");
 const cancelEditBtn = document.getElementById("cancelEditBtn");
 
 let currentEditId = null;
+let currentEditCatagory = null;
+let currentEditImage = null;
+let currentEditDescription = null;
 
 // Fetch and render items
 async function loadItems() {
@@ -25,7 +28,7 @@ function renderItems(items) {
     li.innerHTML = `
       <span>${item.name} (${item.amount}) Price:${item.price}</span>
       <div>
-        <button onclick="editItem(${item.id}, '${item.name}', ${item.amount}, ${item.price})">✏️ Edit</button>
+        <button onclick="editItem(${item.id}, '${item.name}', ${item.amount}, ${item.price}, '${item.catagory}', '${item.image}', '${item.description}' )">✏️ Edit</button>
         <button onclick="deleteItem(${item.id})">🗑️ Delete</button>
       </div>
     `;
@@ -38,20 +41,26 @@ addItemBtn.addEventListener("click", async () => {
   const name = prompt("Enter item name:");
   const amount = parseInt(prompt("Enter amount:"), 10) || 0;
   const price = parseInt(prompt("Enter Price:"), 10) || 0;
+  const catagory = prompt("Enter item name:");
+  const image = "null";
+  const description = prompt("Enter item name:");
 
   if (name) {
     await fetch("/api/items", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ name, amount, price })
+      body: JSON.stringify({ name, amount, price, catagory, image, description })
     });
     loadItems();
   }
 });
 
 // Edit item
-window.editItem = (id, name, amount, price) => {
+window.editItem = (id, name, amount, price, catagory, image, description) => {
   currentEditId = id;
+  currentEditCatagory = catagory;
+  currentEditImage = image;
+  currentEditDescription = description;
   editName.value = name;
   editAmount.value = amount;
   editPrice.value = price;
@@ -65,7 +74,10 @@ saveEditBtn.addEventListener("click", async () => {
     body: JSON.stringify({
       name: editName.value,
       amount: parseInt(editAmount.value, 10) || 0,
-      price: parseInt(editPrice.value, 10) || 0
+      price: parseInt(editPrice.value, 10) || 0,
+      catagory: currentEditCatagory,
+      image: currentEditImage,
+      description: currentEditDescription
     })
   });
   editModal.style.display = "none";
