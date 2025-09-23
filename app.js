@@ -91,6 +91,17 @@ app.get("/api/orders", (req, res) => {
   res.json(readJson(ordersFile));
 });
 
+// GET orders for a specific customerID
+app.get("/api/orders/customer/:customerID", (req, res) => {
+  const orders = readJson(ordersFile);
+  const customerID = req.params.customerID;
+
+  // Filter orders by customerID
+  const userOrders = orders.filter(order => order.customerID === customerID);
+
+  res.json(userOrders);
+});
+
 // Add new order
 app.post("/api/orders", (req, res) => {
   const orders = readJson(ordersFile);
