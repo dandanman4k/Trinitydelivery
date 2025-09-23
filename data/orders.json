@@ -6,7 +6,8 @@
     "customerName": "John doe",
     "location": "Bajjo",
     "phoneNumber": 7999998778,
-    "orderFilled": true
+    "orderFilled": true,
+    "customerID": 3424323
   },
   {
     "id": 1,
@@ -33,6 +34,96 @@
     "customerName": "Brian Mashal",
     "location": "Bajjo",
     "phoneNumber": 7999998778,
+    "orderFilled": false
+  },
+  {
+    "id": 1758592883629,
+    "customerName": "dandan",
+    "drug": "1",
+    "amount": 1,
+    "location": "monkey town",
+    "phoneNumber": "0700122222",
+    "orderFilled": false
+  },
+  {
+    "id": 1758592916196,
+    "customerName": "dandan",
+    "drug": "1",
+    "amount": 1,
+    "location": "monkey town",
+    "phoneNumber": "0700122222",
+    "orderFilled": false
+  },
+  {
+    "id": 1758592964186,
+    "customerName": "dandan",
+    "drug": "1",
+    "amount": 1,
+    "location": "monkey town",
+    "phoneNumber": "0700122222",
+    "orderFilled": false
+  },
+  {
+    "id": 1758593199232,
+    "customerName": "dandan",
+    "drug": "1",
+    "amount": 1,
+    "location": "monkey town",
+    "phoneNumber": "0700122222",
+    "orderFilled": false
+  },
+  {
+    "id": 1758593594693,
+    "customerName": "dandan",
+    "drug": "1",
+    "amount": 1,
+    "location": "monkey town",
+    "phoneNumber": "0745862598",
+    "orderFilled": false
+  },
+  {
+    "id": 1758593984023,
+    "customerName": "dandan",
+    "drug": "1",
+    "amount": 1,
+    "location": "monkey town",
+    "phoneNumber": "0452658956",
+    "orderFilled": false
+  },
+  {
+    "id": 1758593984051,
+    "customerName": "dandan",
+    "drug": "1757698290171",
+    "amount": 4,
+    "location": "monkey town",
+    "phoneNumber": "0452658956",
+    "orderFilled": false
+  },
+  {
+    "id": 1758594240107,
+    "customerName": "dandan",
+    "drug": "1",
+    "amount": 1,
+    "location": "monkey town",
+    "phoneNumber": "042563598",
+    "orderFilled": false
+  },
+  {
+    "id": 1758594240183,
+    "customerName": "dandan",
+    "drug": "2",
+    "amount": 1,
+    "location": "monkey town",
+    "phoneNumber": "042563598",
+    "orderFilled": false
+  },
+  {
+    "id": 1758594240206,
+    "customerName": "dandan",
+    "drug": "1757698290171",
+    "amount": 1,
+    "location": "monkey town",
+    "phoneNumber": "042563598",
     "orderFilled": false
   }
 ]

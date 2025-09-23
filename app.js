@@ -102,6 +102,7 @@ app.post("/api/orders", (req, res) => {
     location: req.body.location,
     phoneNumber: req.body.phoneNumber,
     orderFilled: false,
+    customerID: req.body.customerID,
   };
   orders.push(newOrder);
   writeJson(ordersFile, orders);
