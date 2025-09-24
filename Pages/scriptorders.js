@@ -16,13 +16,34 @@ const cancelEditBtn = document.getElementById("cancelEditBtn");
 let currentEditId = null;
 let showFilled = false; // toggle state
 
+let stockCache = [];
+
+async function loadStock() {
+  const res = await fetch("/api/items"); // stock.json
+  stockCache = await res.json();
+}
+
 // Fetch and render orders
 async function loadOrders() {
   const res = await fetch("/api/orders");
   let orders = await res.json();
+
+  // filter by filled/unfilled toggle
   orders = orders.filter(o => o.orderFilled === showFilled);
-  renderOrders(orders);
+
+  // attach stock details
+  const enrichedOrders = orders.map(order => {
+    const product = stockCache.find(p => Number(p.id) === Number(order.drug));
+    return {
+      ...order,
+      productName: product ? product.name : "Unknown",
+      productPrice: product ? product.price : 0
+    };
+  });
+
+  renderOrders(enrichedOrders);
 }
+
 
 function renderOrders(orders) {
   itemList.innerHTML = "";
@@ -30,7 +51,9 @@ function renderOrders(orders) {
     const li = document.createElement("li");
     li.innerHTML = `
       <div>
-        <strong>${o.customerName}</strong> ordered <strong>${o.amount}</strong> of <strong>${o.drug}</strong><br>
+        <strong>${o.customerName}</strong> ordered 
+        <strong>${o.amount}</strong> of 
+        <strong>${o.productName}</strong> (💰 ${o.productPrice})<br>
         📍 Location: ${o.location} | 📞 Phone: ${o.phoneNumber}<br>
         Status: ${o.orderFilled ? "✅ Filled" : "❌ Not filled"}
       </div>
@@ -104,13 +127,28 @@ searchInput.addEventListener("keyup", async () => {
   const res = await fetch("/api/orders");
   let orders = await res.json();
   const filter = searchInput.value.toLowerCase();
-  orders = orders.filter(o =>
-    (o.customerName && o.customerName.toLowerCase().includes(filter)) ||
-    (o.drug && o.drug.toLowerCase().includes(filter))
-  );
-  orders = orders.filter(o => o.orderFilled === showFilled);
-  renderOrders(orders);
+
+const enrichedOrders = orders.map(order => {
+  const product = stockCache.find(p => Number(p.id) === Number(order.drug));
+  return {
+    ...order,
+    productName: product ? product.name : "Unknown"
+  };
 });
 
+  const filtered = enrichedOrders.filter(o =>
+    (o.customerName && o.customerName.toLowerCase().includes(filter)) ||
+    (o.productName && o.productName.toLowerCase().includes(filter))
+  );
+
+  renderOrders(filtered);
+});
+
+
 // Initial load
-loadOrders();
+(async function init() {
+  await loadStock();
+  setInterval(() => {
+  loadOrders();
+}, 5000);
+})();

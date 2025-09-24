@@ -140,8 +140,11 @@ app.put("/api/orders/:id/fill", (req, res) => {
   if (!order) return res.status(404).json({ error: "Order not found" });
   if (order.orderFilled) return res.status(400).json({ error: "Already filled" });
 
-  const drug = stock.find(s => s.name.toLowerCase() === order.drug.toLowerCase());
-  if (!drug || drug.amount < order.amount) {
+  // ✅ match by stock ID
+  const drug = stock.find(s => Number(s.id) === Number(order.drug));
+  if (!drug) return res.status(400).json({ error: "Drug not found in stock" });
+
+  if (drug.amount < order.amount) {
     return res.status(400).json({ error: "Not enough stock" });
   }
 
