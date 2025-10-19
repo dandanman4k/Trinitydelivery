@@ -93,7 +93,10 @@ const orders = db.collection("orders");
 
 
 export default async function handler(req, res) {
+  console.log("Connecting to MongoDB...");
   const { db } = await connectToDatabase();
+  console.log("Connected to:", db.databaseName);
+
   const orders = db.collection("orders");
   const stock = db.collection("stock");
 
