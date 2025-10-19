@@ -2,6 +2,7 @@ const express = require("express");
 const app = express();
 const path = require("path");
 const bodyParser = require("body-parser");
+require('dotenv').config();
 const fs = require("fs");
 
 const dataFile = path.join(__dirname, "data", "stock.json");
@@ -175,7 +176,7 @@ app.get("/Order", (req, res) => {
 });
 
 
-const PORT = 3000;
+const port = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Server running at http://localhost:${PORT}`);
 });
