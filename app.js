@@ -90,7 +90,7 @@ const stockFile = path.join(__dirname, "data", "stock.json");
 
 // Get all orders
 const orders = db.collection("orders");
-await orders.find(), insertOne(), updateOne(), deleteOne()
+
 
 export default async function handler(req, res) {
   const { db } = await connectToDatabase();
