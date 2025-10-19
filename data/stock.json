@@ -1,44 +1,2180 @@
 [
   {
     "id": 1,
-    "name": "Apple",
-    "amount": 6,
-    "price": 3610
+    "name": "Albendazole 400mg",
+    "category": "TABLETS/CAPS",
+    "image": "",
+    "description": "",
+    "price": 2000,
+    "amount": 30
   },
   {
     "id": 2,
-    "name": "Banana",
-    "catagory": "Furits",
-    "image": "sdgdf",
-    "description": "fgdfgd",
-    "amount": 1,
-    "price": 5000
+    "name": "Amilodipine 5mg",
+    "category": "TABLETS/CAPS",
+    "image": "",
+    "description": "",
+    "price": 300,
+    "amount": 30
   },
   {
     "id": 3,
-    "name": "Cherry",
-    "catagory": "Furits",
-    "image": "fgd",
-    "description": "dsgfth",
-    "amount": 20,
-    "price": 6000
+    "name": "Amitriptyline Tabs  5mg",
+    "category": "TABLETS/CAPS",
+    "image": "",
+    "description": "",
+    "price": 200,
+    "amount": 30
   },
   {
-    "id": 1757698290171,
-    "name": "Mango",
-    "catagory": "Furits",
-    "image": "tjyfgh",
-    "description": "jyfhjyuj",
-    "amount": 15,
-    "price": 7000
+    "id": 4,
+    "name": "Amlodipine 10 mg",
+    "category": "TABLETS/CAPS",
+    "image": "",
+    "description": "",
+    "price": 500,
+    "amount": 30
   },
   {
-    "id": 1757700534603,
-    "name": "Balls",
-    "catagory": "items",
-    "image": "ftjyjtf",
-    "description": "jtyjfhg",
-    "amount": 3,
-    "price": 1000
+    "id": 5,
+    "name": "Amoxyl Caps 250 (India)",
+    "category": "TABLETS/CAPS",
+    "image": "",
+    "description": "",
+    "price": 200,
+    "amount": 30
+  },
+  {
+    "id": 6,
+    "name": "Ampicillin 250mg Caps  ",
+    "category": "TABLETS/CAPS",
+    "image": "",
+    "description": "",
+    "price": 200,
+    "amount": 30
+  },
+  {
+    "id": 7,
+    "name": "Ampiclox 250/250 Caps ",
+    "category": "TABLETS/CAPS",
+    "image": "",
+    "description": "",
+    "price": 400,
+    "amount": 30
+  },
+  {
+    "id": 8,
+    "name": "Antinal Caps ",
+    "category": "TABLETS/CAPS",
+    "image": "",
+    "description": "",
+    "price": 1200,
+    "amount": 30
+  },
+  {
+    "id": 9,
+    "name": "Artovastatin 20mg Tabs ",
+    "category": "TABLETS/CAPS",
+    "image": "",
+    "description": "",
+    "price": 1000,
+    "amount": 30
+  },
+  {
+    "id": 10,
+    "name": "Atenalol 100mg Tabs ",
+    "category": "TABLETS/CAPS",
+    "image": "",
+    "description": "",
+    "price": 200,
+    "amount": 30
+  },
+  {
+    "id": 11,
+    "name": "AUG 325mg (EU)",
+    "category": "TABLETS/CAPS",
+    "image": "",
+    "description": "",
+    "price": 3500,
+    "amount": 30
+  },
+  {
+    "id": 12,
+    "name": "AUG 625mg(EU)",
+    "category": "TABLETS/CAPS",
+    "image": "",
+    "description": "",
+    "price": 4500,
+    "amount": 30
+  },
+  {
+    "id": 13,
+    "name": "Azithro 250mg (India)",
+    "category": "TABLETS/CAPS",
+    "image": "",
+    "description": "",
+    "price": 1500,
+    "amount": 30
+  },
+  {
+    "id": 14,
+    "name": "Azithro 500mg (India)",
+    "category": "TABLETS/CAPS",
+    "image": "",
+    "description": "",
+    "price": 3000,
+    "amount": 30
+  },
+  {
+    "id": 15,
+    "name": "Bendro 5MG Tabs",
+    "category": "TABLETS/CAPS",
+    "image": "",
+    "description": "",
+    "price": 200,
+    "amount": 30
+  },
+  {
+    "id": 16,
+    "name": "Bisacodyl Tabs ",
+    "category": "TABLETS/CAPS",
+    "image": "",
+    "description": "",
+    "price": 200,
+    "amount": 30
+  },
+  {
+    "id": 17,
+    "name": "Cabamazapine 200 mg",
+    "category": "TABLETS/CAPS",
+    "image": "",
+    "description": "",
+    "price": 300,
+    "amount": 30
+  },
+  {
+    "id": 18,
+    "name": "CAF 250 Caps ",
+    "category": "TABLETS/CAPS",
+    "image": "",
+    "description": "",
+    "price": 200,
+    "amount": 30
+  },
+  {
+    "id": 19,
+    "name": "Calcium Lactate ",
+    "category": "TABLETS/CAPS",
+    "image": "",
+    "description": "",
+    "price": 200,
+    "amount": 30
+  },
+  {
+    "id": 20,
+    "name": "Cefalexin 250 Caps ",
+    "category": "TABLETS/CAPS",
+    "image": "",
+    "description": "",
+    "price": 500,
+    "amount": 30
+  },
+  {
+    "id": 21,
+    "name": "Cefixime 200 mg Tabs",
+    "category": "TABLETS/CAPS",
+    "image": "",
+    "description": "",
+    "price": 2000,
+    "amount": 30
+  },
+  {
+    "id": 22,
+    "name": "Cefixime 400mg Caps",
+    "category": "TABLETS/CAPS",
+    "image": "",
+    "description": "",
+    "price": 4000,
+    "amount": 30
+  },
+  {
+    "id": 23,
+    "name": "Cefuroxime (Pulmocef)500mg Tabs ",
+    "category": "TABLETS/CAPS",
+    "image": "",
+    "description": "",
+    "price": 3000,
+    "amount": 30
+  },
+  {
+    "id": 24,
+    "name": "Cefuroxime 500mg Tabs ",
+    "category": "TABLETS/CAPS",
+    "image": "",
+    "description": "",
+    "price": 2000,
+    "amount": 30
+  },
+  {
+    "id": 25,
+    "name": "Cetrizine 10MG Tabs ",
+    "category": "TABLETS/CAPS",
+    "image": "",
+    "description": "",
+    "price": 200,
+    "amount": 30
+  },
+  {
+    "id": 26,
+    "name": "Charcoal Tabs ",
+    "category": "TABLETS/CAPS",
+    "image": "",
+    "description": "",
+    "price": 300,
+    "amount": 30
+  },
+  {
+    "id": 27,
+    "name": "Chlorzoxazone 250mg/Paracetamol 500mg ",
+    "category": "TABLETS/CAPS",
+    "image": "",
+    "description": "",
+    "price": 1000,
+    "amount": 30
+  },
+  {
+    "id": 28,
+    "name": "Chlopromazine Tabs ",
+    "category": "TABLETS/CAPS",
+    "image": "",
+    "description": "",
+    "price": 200,
+    "amount": 30
+  },
+  {
+    "id": 29,
+    "name": "Cipro 500 mg Tabs ",
+    "category": "TABLETS/CAPS",
+    "image": "",
+    "description": "",
+    "price": 500,
+    "amount": 30
+  },
+  {
+    "id": 30,
+    "name": "Cloxacillin 250 Caps ",
+    "category": "TABLETS/CAPS",
+    "image": "",
+    "description": "",
+    "price": 200,
+    "amount": 30
+  },
+  {
+    "id": 31,
+    "name": "Coartem (Adult)",
+    "category": "TABLETS/CAPS",
+    "image": "",
+    "description": "",
+    "price": 400,
+    "amount": 30
+  },
+  {
+    "id": 32,
+    "name": "Coartem (Children)",
+    "category": "TABLETS/CAPS",
+    "image": "",
+    "description": "",
+    "price": 200,
+    "amount": 30
+  },
+  {
+    "id": 33,
+    "name": "Cold Caps ",
+    "category": "TABLETS/CAPS",
+    "image": "",
+    "description": "",
+    "price": 300,
+    "amount": 30
+  },
+  {
+    "id": 34,
+    "name": "Coldafex ",
+    "category": "TABLETS/CAPS",
+    "image": "",
+    "description": "",
+    "price": 400,
+    "amount": 30
+  },
+  {
+    "id": 35,
+    "name": "Cordein(Co-Codermol) Tabs 508 mg",
+    "category": "TABLETS/CAPS",
+    "image": "",
+    "description": "",
+    "price": 700,
+    "amount": 30
+  },
+  {
+    "id": 36,
+    "name": "Cordein/Paracetamol(Nikodin) 510mg Tabs",
+    "category": "TABLETS/CAPS",
+    "image": "",
+    "description": "",
+    "price": 500,
+    "amount": 30
+  },
+  {
+    "id": 37,
+    "name": "Dexamethasone 2mg Tabs ",
+    "category": "TABLETS/CAPS",
+    "image": "",
+    "description": "",
+    "price": 100,
+    "amount": 30
+  },
+  {
+    "id": 38,
+    "name": "Diazepam Tabs  ",
+    "category": "TABLETS/CAPS",
+    "image": "",
+    "description": "",
+    "price": 100,
+    "amount": 30
+  },
+  {
+    "id": 39,
+    "name": "Diclo supp 100 mg",
+    "category": "TABLETS/CAPS",
+    "image": "",
+    "description": "",
+    "price": 5000,
+    "amount": 30
+  },
+  {
+    "id": 40,
+    "name": "Diclo supp 12.5mg supp",
+    "category": "TABLETS/CAPS",
+    "image": "",
+    "description": "",
+    "price": 2500,
+    "amount": 30
+  },
+  {
+    "id": 41,
+    "name": "Diclo supp 25mg supp",
+    "category": "TABLETS/CAPS",
+    "image": "",
+    "description": "",
+    "price": 3000,
+    "amount": 30
+  },
+  {
+    "id": 42,
+    "name": "Diclofenac 50mg Tabs ",
+    "category": "TABLETS/CAPS",
+    "image": "",
+    "description": "",
+    "price": 100,
+    "amount": 30
+  },
+  {
+    "id": 43,
+    "name": "Doxy Caps 100 mg",
+    "category": "TABLETS/CAPS",
+    "image": "",
+    "description": "",
+    "price": 200,
+    "amount": 30
+  },
+  {
+    "id": 44,
+    "name": "Duo - cotexin Tabs ",
+    "category": "TABLETS/CAPS",
+    "image": "",
+    "description": "",
+    "price": 2200,
+    "amount": 30
+  },
+  {
+    "id": 45,
+    "name": "Dynaper Tabs 550 mg ",
+    "category": "TABLETS/CAPS",
+    "image": "",
+    "description": "",
+    "price": 500,
+    "amount": 30
+  },
+  {
+    "id": 46,
+    "name": "Ecorin/Asprin 75mg",
+    "category": "TABLETS/CAPS",
+    "image": "",
+    "description": "",
+    "price": 250,
+    "amount": 30
+  },
+  {
+    "id": 47,
+    "name": "Erythromycin Tabs 250 mg",
+    "category": "TABLETS/CAPS",
+    "image": "",
+    "description": "",
+    "price": 300,
+    "amount": 30
+  },
+  {
+    "id": 48,
+    "name": "Esomeprazole Caps 20 mg",
+    "category": "TABLETS/CAPS",
+    "image": "",
+    "description": "",
+    "price": 8000,
+    "amount": 30
+  },
+  {
+    "id": 49,
+    "name": "Fabutas 40 mg Tabs ",
+    "category": "TABLETS/CAPS",
+    "image": "",
+    "description": "",
+    "price": 1500,
+    "amount": 30
+  },
+  {
+    "id": 50,
+    "name": "Fansider Tabs ",
+    "category": "TABLETS/CAPS",
+    "image": "",
+    "description": "",
+    "price": 500,
+    "amount": 30
+  },
+  {
+    "id": 51,
+    "name": "Fefo Caps",
+    "category": "TABLETS/CAPS",
+    "image": "",
+    "description": "",
+    "price": 500,
+    "amount": 30
+  },
+  {
+    "id": 52,
+    "name": "Ferrous Sulphate Tabs",
+    "category": "TABLETS/CAPS",
+    "image": "",
+    "description": "",
+    "price": 200,
+    "amount": 30
+  },
+  {
+    "id": 53,
+    "name": "Flucamox 500mg",
+    "category": "TABLETS/CAPS",
+    "image": "",
+    "description": "",
+    "price": 2000,
+    "amount": 30
+  },
+  {
+    "id": 54,
+    "name": "Fluconazole 200 mg Caps ",
+    "category": "TABLETS/CAPS",
+    "image": "",
+    "description": "",
+    "price": 1500,
+    "amount": 30
+  },
+  {
+    "id": 55,
+    "name": "Flufed ",
+    "category": "TABLETS/CAPS",
+    "image": "",
+    "description": "",
+    "price": 300,
+    "amount": 30
+  },
+  {
+    "id": 56,
+    "name": "Fluoxetine 20mg",
+    "category": "TABLETS/CAPS",
+    "image": "",
+    "description": "",
+    "price": 1000,
+    "amount": 30
+  },
+  {
+    "id": 57,
+    "name": "Folic Acid Tabs ",
+    "category": "TABLETS/CAPS",
+    "image": "",
+    "description": "",
+    "price": 200,
+    "amount": 30
+  },
+  {
+    "id": 58,
+    "name": "Furosemide 40 mg Tabs ",
+    "category": "TABLETS/CAPS",
+    "image": "",
+    "description": "",
+    "price": 200,
+    "amount": 30
+  },
+  {
+    "id": 59,
+    "name": "Glibenclamide Tabs 5 mg ",
+    "category": "TABLETS/CAPS",
+    "image": "",
+    "description": "",
+    "price": 400,
+    "amount": 30
+  },
+  {
+    "id": 60,
+    "name": "Gofen 400 mg Caps ",
+    "category": "TABLETS/CAPS",
+    "image": "",
+    "description": "",
+    "price": 1200,
+    "amount": 30
+  },
+  {
+    "id": 61,
+    "name": "Griseofulvin 500 mgTabs ",
+    "category": "TABLETS/CAPS",
+    "image": "",
+    "description": "",
+    "price": 500,
+    "amount": 30
+  },
+  {
+    "id": 62,
+    "name": "Gynest/Clotromazile Perseries",
+    "category": "TABLETS/CAPS",
+    "image": "",
+    "description": "",
+    "price": 2000,
+    "amount": 30
+  },
+  {
+    "id": 63,
+    "name": "H.Pylori Kit ",
+    "category": "TABLETS/CAPS",
+    "image": "",
+    "description": "",
+    "price": 40000,
+    "amount": 30
+  },
+  {
+    "id": 64,
+    "name": "Hedex Tabs",
+    "category": "TABLETS/CAPS",
+    "image": "",
+    "description": "",
+    "price": 200,
+    "amount": 30
+  },
+  {
+    "id": 65,
+    "name": "Hyosine/Buscopam Tabs ",
+    "category": "TABLETS/CAPS",
+    "image": "",
+    "description": "",
+    "price": 300,
+    "amount": 30
+  },
+  {
+    "id": 66,
+    "name": "Ibruprofen 200 mg Tabs ",
+    "category": "TABLETS/CAPS",
+    "image": "",
+    "description": "",
+    "price": 100,
+    "amount": 30
+  },
+  {
+    "id": 67,
+    "name": "Injectaplan",
+    "category": "TABLETS/CAPS",
+    "image": "",
+    "description": "",
+    "price": 8000,
+    "amount": 30
+  },
+  {
+    "id": 68,
+    "name": "Isoryn nosal adult",
+    "category": "TABLETS/CAPS",
+    "image": "",
+    "description": "",
+    "price": 8000,
+    "amount": 30
+  },
+  {
+    "id": 69,
+    "name": "Isoryn nosal pead",
+    "category": "TABLETS/CAPS",
+    "image": "",
+    "description": "",
+    "price": 8000,
+    "amount": 30
+  },
+  {
+    "id": 70,
+    "name": "Ketoconazole Tabs",
+    "category": "TABLETS/CAPS",
+    "image": "",
+    "description": "",
+    "price": 500,
+    "amount": 30
+  },
+  {
+    "id": 71,
+    "name": "Levofloxacine 500mg Tabs ",
+    "category": "TABLETS/CAPS",
+    "image": "",
+    "description": "",
+    "price": 1500,
+    "amount": 30
+  },
+  {
+    "id": 72,
+    "name": "Levofloxacine 750mg Tabs ",
+    "category": "TABLETS/CAPS",
+    "image": "",
+    "description": "",
+    "price": 2000,
+    "amount": 30
+  },
+  {
+    "id": 73,
+    "name": "Lonart Tabs",
+    "category": "TABLETS/CAPS",
+    "image": "",
+    "description": "",
+    "price": 500,
+    "amount": 30
+  },
+  {
+    "id": 74,
+    "name": "Loratadine",
+    "category": "TABLETS/CAPS",
+    "image": "",
+    "description": "",
+    "price": 500,
+    "amount": 30
+  },
+  {
+    "id": 75,
+    "name": "Lorsatan H 50/12.5mg",
+    "category": "TABLETS/CAPS",
+    "image": "",
+    "description": "",
+    "price": 1000,
+    "amount": 30
+  },
+  {
+    "id": 76,
+    "name": "Lumartem",
+    "category": "TABLETS/CAPS",
+    "image": "",
+    "description": "",
+    "price": 300,
+    "amount": 30
+  },
+  {
+    "id": 77,
+    "name": "Magnesium.T. Tabs  ",
+    "category": "TABLETS/CAPS",
+    "image": "",
+    "description": "",
+    "price": 100,
+    "amount": 30
+  },
+  {
+    "id": 78,
+    "name": "Mefenamic Acid Tabs 500mg",
+    "category": "TABLETS/CAPS",
+    "image": "",
+    "description": "",
+    "price": 1000,
+    "amount": 30
+  },
+  {
+    "id": 79,
+    "name": "Metformin DENK Tabs 500 mg",
+    "category": "TABLETS/CAPS",
+    "image": "",
+    "description": "",
+    "price": 1000,
+    "amount": 30
+  },
+  {
+    "id": 80,
+    "name": "Metformin Tabs 500 mg",
+    "category": "TABLETS/CAPS",
+    "image": "",
+    "description": "",
+    "price": 300,
+    "amount": 30
+  },
+  {
+    "id": 81,
+    "name": "Methydopa Tabs 250",
+    "category": "TABLETS/CAPS",
+    "image": "",
+    "description": "",
+    "price": 500,
+    "amount": 30
+  },
+  {
+    "id": 82,
+    "name": "Metochlopramide Tabs/Plasil",
+    "category": "TABLETS/CAPS",
+    "image": "",
+    "description": "",
+    "price": 200,
+    "amount": 30
+  },
+  {
+    "id": 83,
+    "name": "Metronidazole 200mg Tabs",
+    "category": "TABLETS/CAPS",
+    "image": "",
+    "description": "",
+    "price": 200,
+    "amount": 30
+  },
+  {
+    "id": 84,
+    "name": "Microgynon @ pack",
+    "category": "TABLETS/CAPS",
+    "image": "",
+    "description": "",
+    "price": 6000,
+    "amount": 30
+  },
+  {
+    "id": 85,
+    "name": "Misoprostol 200 mg Tabs ",
+    "category": "TABLETS/CAPS",
+    "image": "",
+    "description": "",
+    "price": 2000,
+    "amount": 30
+  },
+  {
+    "id": 86,
+    "name": "Montelukast 10mg Tabs",
+    "category": "TABLETS/CAPS",
+    "image": "",
+    "description": "",
+    "price": 600,
+    "amount": 30
+  },
+  {
+    "id": 87,
+    "name": "Multivitamin Tabs ",
+    "category": "TABLETS/CAPS",
+    "image": "",
+    "description": "",
+    "price": 100,
+    "amount": 30
+  },
+  {
+    "id": 88,
+    "name": "Neurorubine Tabs ",
+    "category": "TABLETS/CAPS",
+    "image": "",
+    "description": "",
+    "price": 1500,
+    "amount": 30
+  },
+  {
+    "id": 89,
+    "name": "Neuroton Tabs ",
+    "category": "TABLETS/CAPS",
+    "image": "",
+    "description": "",
+    "price": 1500,
+    "amount": 30
+  },
+  {
+    "id": 90,
+    "name": "Nifredipine 20 MG",
+    "category": "TABLETS/CAPS",
+    "image": "",
+    "description": "",
+    "price": 500,
+    "amount": 30
+  },
+  {
+    "id": 91,
+    "name": "Nitrofurawtoin Tabs ",
+    "category": "TABLETS/CAPS",
+    "image": "",
+    "description": "",
+    "price": 200,
+    "amount": 30
+  },
+  {
+    "id": 92,
+    "name": "Nospa Tabs ",
+    "category": "TABLETS/CAPS",
+    "image": "",
+    "description": "",
+    "price": 700,
+    "amount": 30
+  },
+  {
+    "id": 93,
+    "name": "Nystatin Perseries (Adose )",
+    "category": "TABLETS/CAPS",
+    "image": "",
+    "description": "",
+    "price": 10000,
+    "amount": 30
+  },
+  {
+    "id": 94,
+    "name": "Nystatin Tabs ",
+    "category": "TABLETS/CAPS",
+    "image": "",
+    "description": "",
+    "price": 300,
+    "amount": 30
+  },
+  {
+    "id": 95,
+    "name": "Olfen 100 SR Caps",
+    "category": "TABLETS/CAPS",
+    "image": "",
+    "description": "",
+    "price": 4000,
+    "amount": 30
+  },
+  {
+    "id": 96,
+    "name": "Omeprazole 20 mg Caps",
+    "category": "TABLETS/CAPS",
+    "image": "",
+    "description": "",
+    "price": 500,
+    "amount": 30
+  },
+  {
+    "id": 97,
+    "name": "Osteocare Tabs ",
+    "category": "TABLETS/CAPS",
+    "image": "",
+    "description": "",
+    "price": 1500,
+    "amount": 30
+  },
+  {
+    "id": 98,
+    "name": "Panadol Advance Pair",
+    "category": "TABLETS/CAPS",
+    "image": "",
+    "description": "",
+    "price": 500,
+    "amount": 30
+  },
+  {
+    "id": 99,
+    "name": "Panadol Extra Pair",
+    "category": "TABLETS/CAPS",
+    "image": "",
+    "description": "",
+    "price": 500,
+    "amount": 30
+  },
+  {
+    "id": 100,
+    "name": "Panadol Tabs 500 mg  ",
+    "category": "TABLETS/CAPS",
+    "image": "",
+    "description": "",
+    "price": 100,
+    "amount": 30
+  },
+  {
+    "id": 101,
+    "name": "Paracetamol 125 Supp",
+    "category": "TABLETS/CAPS",
+    "image": "",
+    "description": "",
+    "price": 2500,
+    "amount": 30
+  },
+  {
+    "id": 102,
+    "name": "Paracetamol 250 Supp",
+    "category": "TABLETS/CAPS",
+    "image": "",
+    "description": "",
+    "price": 3000,
+    "amount": 30
+  },
+  {
+    "id": 103,
+    "name": "Phenox '250' Tabs (Pen V)",
+    "category": "TABLETS/CAPS",
+    "image": "",
+    "description": "",
+    "price": 300,
+    "amount": 30
+  },
+  {
+    "id": 104,
+    "name": "Pialaxin  Tabs",
+    "category": "TABLETS/CAPS",
+    "image": "",
+    "description": "",
+    "price": 2000,
+    "amount": 30
+  },
+  {
+    "id": 105,
+    "name": "Pill Plan ",
+    "category": "TABLETS/CAPS",
+    "image": "",
+    "description": "",
+    "price": 3000,
+    "amount": 30
+  },
+  {
+    "id": 106,
+    "name": "Piroxicam  Caps",
+    "category": "TABLETS/CAPS",
+    "image": "",
+    "description": "",
+    "price": 200,
+    "amount": 30
+  },
+  {
+    "id": 107,
+    "name": "Prednisoline 5 mg Tabs ",
+    "category": "TABLETS/CAPS",
+    "image": "",
+    "description": "",
+    "price": 100,
+    "amount": 30
+  },
+  {
+    "id": 108,
+    "name": "Propranolol 40mg Tabs",
+    "category": "TABLETS/CAPS",
+    "image": "",
+    "description": "",
+    "price": 200,
+    "amount": 30
+  },
+  {
+    "id": 109,
+    "name": "Quinine Tabs ",
+    "category": "TABLETS/CAPS",
+    "image": "",
+    "description": "",
+    "price": 200,
+    "amount": 30
+  },
+  {
+    "id": 110,
+    "name": "Rabeprazole 20mg",
+    "category": "TABLETS/CAPS",
+    "image": "",
+    "description": "",
+    "price": 1500,
+    "amount": 30
+  },
+  {
+    "id": 111,
+    "name": "Ranitidine 50mg Inj",
+    "category": "TABLETS/CAPS",
+    "image": "",
+    "description": "",
+    "price": 5000,
+    "amount": 30
+  },
+  {
+    "id": 112,
+    "name": "Ridmal Tabs",
+    "category": "TABLETS/CAPS",
+    "image": "",
+    "description": "",
+    "price": 1500,
+    "amount": 30
+  },
+  {
+    "id": 113,
+    "name": "Salbutamol 4mg Tabs ",
+    "category": "TABLETS/CAPS",
+    "image": "",
+    "description": "",
+    "price": 100,
+    "amount": 30
+  },
+  {
+    "id": 114,
+    "name": "Secnidazole 1gm",
+    "category": "TABLETS/CAPS",
+    "image": "",
+    "description": "",
+    "price": 1500,
+    "amount": 30
+  },
+  {
+    "id": 115,
+    "name": "Sediproct Supp ",
+    "category": "TABLETS/CAPS",
+    "image": "",
+    "description": "",
+    "price": 3000,
+    "amount": 30
+  },
+  {
+    "id": 116,
+    "name": "Septrin 480 mg Tabs ",
+    "category": "TABLETS/CAPS",
+    "image": "",
+    "description": "",
+    "price": 200,
+    "amount": 30
+  },
+  {
+    "id": 117,
+    "name": "Sinarest Forte ",
+    "category": "TABLETS/CAPS",
+    "image": "",
+    "description": "",
+    "price": 1000,
+    "amount": 30
+  },
+  {
+    "id": 118,
+    "name": "Spironolactone 25mg",
+    "category": "TABLETS/CAPS",
+    "image": "",
+    "description": "",
+    "price": 1000,
+    "amount": 30
+  },
+  {
+    "id": 119,
+    "name": "Tetracycline 250 Caps ",
+    "category": "TABLETS/CAPS",
+    "image": "",
+    "description": "",
+    "price": 200,
+    "amount": 30
+  },
+  {
+    "id": 120,
+    "name": "Tinidazole Tabs ",
+    "category": "TABLETS/CAPS",
+    "image": "",
+    "description": "",
+    "price": 400,
+    "amount": 30
+  },
+  {
+    "id": 121,
+    "name": "Toff plus Caps",
+    "category": "TABLETS/CAPS",
+    "image": "",
+    "description": "",
+    "price": 500,
+    "amount": 30
+  },
+  {
+    "id": 122,
+    "name": "Toraction ",
+    "category": "TABLETS/CAPS",
+    "image": "",
+    "description": "",
+    "price": 200,
+    "amount": 30
+  },
+  {
+    "id": 123,
+    "name": "Tramadol Caps 50 mg",
+    "category": "TABLETS/CAPS",
+    "image": "",
+    "description": "",
+    "price": 300,
+    "amount": 30
+  },
+  {
+    "id": 124,
+    "name": "TRAP 325mg",
+    "category": "TABLETS/CAPS",
+    "image": "",
+    "description": "",
+    "price": 500,
+    "amount": 30
+  },
+  {
+    "id": 125,
+    "name": "VIT.A. Caps",
+    "category": "TABLETS/CAPS",
+    "image": "",
+    "description": "",
+    "price": 2000,
+    "amount": 30
+  },
+  {
+    "id": 126,
+    "name": "VIT.B. Complex Tabs",
+    "category": "TABLETS/CAPS",
+    "image": "",
+    "description": "",
+    "price": 100,
+    "amount": 30
+  },
+  {
+    "id": 127,
+    "name": "VIT.C. Ascorbic Tabs ",
+    "category": "TABLETS/CAPS",
+    "image": "",
+    "description": "",
+    "price": 200,
+    "amount": 30
+  },
+  {
+    "id": 128,
+    "name": "Zecuf/Lozenges ",
+    "category": "TABLETS/CAPS",
+    "image": "",
+    "description": "",
+    "price": 500,
+    "amount": 30
+  },
+  {
+    "id": 129,
+    "name": "Zerodol ",
+    "category": "TABLETS/CAPS",
+    "image": "",
+    "description": "",
+    "price": 1500,
+    "amount": 30
+  },
+  {
+    "id": 130,
+    "name": "Zinkid Tabs ",
+    "category": "TABLETS/CAPS",
+    "image": "",
+    "description": "",
+    "price": 200,
+    "amount": 30
+  },
+  {
+    "id": 131,
+    "name": "Zycel Caps",
+    "category": "TABLETS/CAPS",
+    "image": "",
+    "description": "",
+    "price": 800,
+    "amount": 30
+  },
+  {
+    "id": 132,
+    "name": "Albendazole  Syrup",
+    "category": "SYRUPS ",
+    "image": "",
+    "description": "",
+    "price": 4000,
+    "amount": 30
+  },
+  {
+    "id": 133,
+    "name": "Amoxyl (Egypt)",
+    "category": "SYRUPS ",
+    "image": "",
+    "description": "",
+    "price": 6000,
+    "amount": 30
+  },
+  {
+    "id": 134,
+    "name": "Amoxyl (India)",
+    "category": "SYRUPS ",
+    "image": "",
+    "description": "",
+    "price": 5000,
+    "amount": 30
+  },
+  {
+    "id": 135,
+    "name": "Ampiclox Syrup (India)",
+    "category": "SYRUPS ",
+    "image": "",
+    "description": "",
+    "price": 6000,
+    "amount": 30
+  },
+  {
+    "id": 136,
+    "name": "Ampiclox Syrup (Kenya)",
+    "category": "SYRUPS ",
+    "image": "",
+    "description": "",
+    "price": 7000,
+    "amount": 30
+  },
+  {
+    "id": 137,
+    "name": "Antinal ",
+    "category": "SYRUPS ",
+    "image": "",
+    "description": "",
+    "price": 15000,
+    "amount": 30
+  },
+  {
+    "id": 138,
+    "name": "APFLU",
+    "category": "SYRUPS ",
+    "image": "",
+    "description": "",
+    "price": 6000,
+    "amount": 30
+  },
+  {
+    "id": 139,
+    "name": "Apidone ",
+    "category": "SYRUPS ",
+    "image": "",
+    "description": "",
+    "price": 25000,
+    "amount": 30
+  },
+  {
+    "id": 140,
+    "name": "Arithromycin (Zocin) (EU)",
+    "category": "SYRUPS ",
+    "image": "",
+    "description": "",
+    "price": 20000,
+    "amount": 30
+  },
+  {
+    "id": 141,
+    "name": "Ascoril 100ml",
+    "category": "SYRUPS ",
+    "image": "",
+    "description": "",
+    "price": 10000,
+    "amount": 30
+  },
+  {
+    "id": 142,
+    "name": "Augmetin 228 (EU)",
+    "category": "SYRUPS ",
+    "image": "",
+    "description": "",
+    "price": 25000,
+    "amount": 30
+  },
+  {
+    "id": 143,
+    "name": "Brozedex 100ml",
+    "category": "SYRUPS ",
+    "image": "",
+    "description": "",
+    "price": 7000,
+    "amount": 30
+  },
+  {
+    "id": 144,
+    "name": "Cadiphen 100ml",
+    "category": "SYRUPS ",
+    "image": "",
+    "description": "",
+    "price": 7000,
+    "amount": 30
+  },
+  {
+    "id": 145,
+    "name": "CAF ",
+    "category": "SYRUPS ",
+    "image": "",
+    "description": "",
+    "price": 6000,
+    "amount": 30
+  },
+  {
+    "id": 146,
+    "name": "Cefalexin (Cefamor) (India)",
+    "category": "SYRUPS ",
+    "image": "",
+    "description": "",
+    "price": 8000,
+    "amount": 30
+  },
+  {
+    "id": 147,
+    "name": "Cefalexin (Felexin) (EU)",
+    "category": "SYRUPS ",
+    "image": "",
+    "description": "",
+    "price": 17000,
+    "amount": 30
+  },
+  {
+    "id": 148,
+    "name": "Cefalexin (Kenya)",
+    "category": "SYRUPS ",
+    "image": "",
+    "description": "",
+    "price": 6000,
+    "amount": 30
+  },
+  {
+    "id": 149,
+    "name": "Cefixime (Cefix) 100ml",
+    "category": "SYRUPS ",
+    "image": "",
+    "description": "",
+    "price": 30000,
+    "amount": 30
+  },
+  {
+    "id": 150,
+    "name": "Cefixime (Taxim - O) 100ml",
+    "category": "SYRUPS ",
+    "image": "",
+    "description": "",
+    "price": 22000,
+    "amount": 30
+  },
+  {
+    "id": 151,
+    "name": "Cetrizine 60ml",
+    "category": "SYRUPS ",
+    "image": "",
+    "description": "",
+    "price": 7000,
+    "amount": 30
+  },
+  {
+    "id": 152,
+    "name": "Co- artesiane (EU)",
+    "category": "SYRUPS ",
+    "image": "",
+    "description": "",
+    "price": 25000,
+    "amount": 30
+  },
+  {
+    "id": 153,
+    "name": "Cold Cap 100ml",
+    "category": "SYRUPS ",
+    "image": "",
+    "description": "",
+    "price": 6000,
+    "amount": 30
+  },
+  {
+    "id": 154,
+    "name": "Cough linctus ",
+    "category": "SYRUPS ",
+    "image": "",
+    "description": "",
+    "price": 5000,
+    "amount": 30
+  },
+  {
+    "id": 155,
+    "name": "Diariv Syrup ",
+    "category": "SYRUPS ",
+    "image": "",
+    "description": "",
+    "price": 15000,
+    "amount": 30
+  },
+  {
+    "id": 156,
+    "name": "Enemax ",
+    "category": "SYRUPS ",
+    "image": "",
+    "description": "",
+    "price": 25000,
+    "amount": 30
+  },
+  {
+    "id": 157,
+    "name": "Ferro.B.Comp 100ml",
+    "category": "SYRUPS ",
+    "image": "",
+    "description": "",
+    "price": 7000,
+    "amount": 30
+  },
+  {
+    "id": 158,
+    "name": "Ferro.B.Comp 60ml",
+    "category": "SYRUPS ",
+    "image": "",
+    "description": "",
+    "price": 5000,
+    "amount": 30
+  },
+  {
+    "id": 159,
+    "name": "Flagyl syrup 100ml - (Kenya)",
+    "category": "SYRUPS ",
+    "image": "",
+    "description": "",
+    "price": 6000,
+    "amount": 30
+  },
+  {
+    "id": 160,
+    "name": "Gripe Water 100ml",
+    "category": "SYRUPS ",
+    "image": "",
+    "description": "",
+    "price": 8000,
+    "amount": 30
+  },
+  {
+    "id": 161,
+    "name": "Grovit Syrup 100ml ",
+    "category": "SYRUPS ",
+    "image": "",
+    "description": "",
+    "price": 9000,
+    "amount": 30
+  },
+  {
+    "id": 162,
+    "name": "Haem - F 200ml Syrup ",
+    "category": "SYRUPS ",
+    "image": "",
+    "description": "",
+    "price": 10000,
+    "amount": 30
+  },
+  {
+    "id": 163,
+    "name": "Hydrogen perioxide ",
+    "category": "SYRUPS ",
+    "image": "",
+    "description": "",
+    "price": 4000,
+    "amount": 30
+  },
+  {
+    "id": 164,
+    "name": "Ibuprofen Syrup 60ml - India/Uganda",
+    "category": "SYRUPS ",
+    "image": "",
+    "description": "",
+    "price": 5000,
+    "amount": 30
+  },
+  {
+    "id": 165,
+    "name": "Ibuprofen Syrup 60ml - Kenya ",
+    "category": "SYRUPS ",
+    "image": "",
+    "description": "",
+    "price": 6000,
+    "amount": 30
+  },
+  {
+    "id": 166,
+    "name": "Lonart Syrup",
+    "category": "SYRUPS ",
+    "image": "",
+    "description": "",
+    "price": 15000,
+    "amount": 30
+  },
+  {
+    "id": 167,
+    "name": "Magnesium.T. Mixtures ",
+    "category": "SYRUPS ",
+    "image": "",
+    "description": "",
+    "price": 4000,
+    "amount": 30
+  },
+  {
+    "id": 168,
+    "name": "Mucogel 100ml ",
+    "category": "SYRUPS ",
+    "image": "",
+    "description": "",
+    "price": 15000,
+    "amount": 30
+  },
+  {
+    "id": 169,
+    "name": "Mucogel 125ml ",
+    "category": "SYRUPS ",
+    "image": "",
+    "description": "",
+    "price": 25000,
+    "amount": 30
+  },
+  {
+    "id": 170,
+    "name": "Nystatin Suspension 30ml ",
+    "category": "SYRUPS ",
+    "image": "",
+    "description": "",
+    "price": 7000,
+    "amount": 30
+  },
+  {
+    "id": 171,
+    "name": "ORS/Restors ",
+    "category": "SYRUPS ",
+    "image": "",
+    "description": "",
+    "price": 500,
+    "amount": 30
+  },
+  {
+    "id": 172,
+    "name": "P-Alaxin",
+    "category": "SYRUPS ",
+    "image": "",
+    "description": "",
+    "price": 15000,
+    "amount": 30
+  },
+  {
+    "id": 173,
+    "name": "Panadol Syrup ",
+    "category": "SYRUPS ",
+    "image": "",
+    "description": "",
+    "price": 4000,
+    "amount": 30
+  },
+  {
+    "id": 174,
+    "name": "Piritex Baby",
+    "category": "SYRUPS ",
+    "image": "",
+    "description": "",
+    "price": 5000,
+    "amount": 30
+  },
+  {
+    "id": 175,
+    "name": "Piritex Junior   ",
+    "category": "SYRUPS ",
+    "image": "",
+    "description": "",
+    "price": 6000,
+    "amount": 30
+  },
+  {
+    "id": 176,
+    "name": "Promethazine 60ml ",
+    "category": "SYRUPS ",
+    "image": "",
+    "description": "",
+    "price": 4000,
+    "amount": 30
+  },
+  {
+    "id": 177,
+    "name": "Quinine Syrup ",
+    "category": "SYRUPS ",
+    "image": "",
+    "description": "",
+    "price": 5000,
+    "amount": 30
+  },
+  {
+    "id": 178,
+    "name": "Relcer gel 100ml",
+    "category": "SYRUPS ",
+    "image": "",
+    "description": "",
+    "price": 10000,
+    "amount": 30
+  },
+  {
+    "id": 179,
+    "name": "Relcer Gel 180ml",
+    "category": "SYRUPS ",
+    "image": "",
+    "description": "",
+    "price": 12000,
+    "amount": 30
+  },
+  {
+    "id": 180,
+    "name": "Septrin Syrup 60ml",
+    "category": "SYRUPS ",
+    "image": "",
+    "description": "",
+    "price": 5000,
+    "amount": 30
+  },
+  {
+    "id": 181,
+    "name": "Zecuf Syrup ",
+    "category": "SYRUPS ",
+    "image": "",
+    "description": "",
+    "price": 8000,
+    "amount": 30
+  },
+  {
+    "id": 182,
+    "name": "Zedex Syrup ",
+    "category": "SYRUPS ",
+    "image": "",
+    "description": "",
+    "price": 8000,
+    "amount": 30
+  },
+  {
+    "id": 183,
+    "name": "Beta. N. Cream",
+    "category": "CREAM/TUBES/DROPS/SOLUTIONS",
+    "image": "",
+    "description": "",
+    "price": 5000,
+    "amount": 30
+  },
+  {
+    "id": 184,
+    "name": "Bucazile Oral Gel  (Miconazile)",
+    "category": "CREAM/TUBES/DROPS/SOLUTIONS",
+    "image": "",
+    "description": "",
+    "price": 10000,
+    "amount": 30
+  },
+  {
+    "id": 185,
+    "name": "Burn cure/ Silver Sulp ",
+    "category": "CREAM/TUBES/DROPS/SOLUTIONS",
+    "image": "",
+    "description": "",
+    "price": 6000,
+    "amount": 30
+  },
+  {
+    "id": 186,
+    "name": "Calamine Lotion ",
+    "category": "CREAM/TUBES/DROPS/SOLUTIONS",
+    "image": "",
+    "description": "",
+    "price": 4000,
+    "amount": 30
+  },
+  {
+    "id": 187,
+    "name": "Candiderm Cream ",
+    "category": "CREAM/TUBES/DROPS/SOLUTIONS",
+    "image": "",
+    "description": "",
+    "price": 8000,
+    "amount": 30
+  },
+  {
+    "id": 188,
+    "name": "Clotrimazole (unisten)",
+    "category": "CREAM/TUBES/DROPS/SOLUTIONS",
+    "image": "",
+    "description": "",
+    "price": 7000,
+    "amount": 30
+  },
+  {
+    "id": 189,
+    "name": "Contractubex (Heparin/Allantoin)",
+    "category": "CREAM/TUBES/DROPS/SOLUTIONS",
+    "image": "",
+    "description": "",
+    "price": 17000,
+    "amount": 30
+  },
+  {
+    "id": 190,
+    "name": "Dexa Eye/Ears ",
+    "category": "CREAM/TUBES/DROPS/SOLUTIONS",
+    "image": "",
+    "description": "",
+    "price": 4000,
+    "amount": 30
+  },
+  {
+    "id": 191,
+    "name": "Dicloday Gel ",
+    "category": "CREAM/TUBES/DROPS/SOLUTIONS",
+    "image": "",
+    "description": "",
+    "price": 5000,
+    "amount": 30
+  },
+  {
+    "id": 192,
+    "name": "Enemax",
+    "category": "CREAM/TUBES/DROPS/SOLUTIONS",
+    "image": "",
+    "description": "",
+    "price": 25000,
+    "amount": 30
+  },
+  {
+    "id": 193,
+    "name": "Fastum Gel ",
+    "category": "CREAM/TUBES/DROPS/SOLUTIONS",
+    "image": "",
+    "description": "",
+    "price": 20000,
+    "amount": 30
+  },
+  {
+    "id": 194,
+    "name": "Genta Eye/Ears ",
+    "category": "CREAM/TUBES/DROPS/SOLUTIONS",
+    "image": "",
+    "description": "",
+    "price": 4000,
+    "amount": 30
+  },
+  {
+    "id": 195,
+    "name": "Hydrocortisone (Lucin) Cream ",
+    "category": "CREAM/TUBES/DROPS/SOLUTIONS",
+    "image": "",
+    "description": "",
+    "price": 6000,
+    "amount": 30
+  },
+  {
+    "id": 196,
+    "name": "K - Y Jelly ",
+    "category": "CREAM/TUBES/DROPS/SOLUTIONS",
+    "image": "",
+    "description": "",
+    "price": 10000,
+    "amount": 30
+  },
+  {
+    "id": 197,
+    "name": "MCG Cream ",
+    "category": "CREAM/TUBES/DROPS/SOLUTIONS",
+    "image": "",
+    "description": "",
+    "price": 9000,
+    "amount": 30
+  },
+  {
+    "id": 198,
+    "name": "Neomycin (Dress up) Cream ",
+    "category": "CREAM/TUBES/DROPS/SOLUTIONS",
+    "image": "",
+    "description": "",
+    "price": 5000,
+    "amount": 30
+  },
+  {
+    "id": 199,
+    "name": "Normal saline/Nasal drops ",
+    "category": "CREAM/TUBES/DROPS/SOLUTIONS",
+    "image": "",
+    "description": "",
+    "price": 5000,
+    "amount": 30
+  },
+  {
+    "id": 200,
+    "name": "Oral Gel (No sores)",
+    "category": "CREAM/TUBES/DROPS/SOLUTIONS",
+    "image": "",
+    "description": "",
+    "price": 6000,
+    "amount": 30
+  },
+  {
+    "id": 201,
+    "name": "Probeta.N. Eye drops ",
+    "category": "CREAM/TUBES/DROPS/SOLUTIONS",
+    "image": "",
+    "description": "",
+    "price": 5000,
+    "amount": 30
+  },
+  {
+    "id": 202,
+    "name": "Salbutamol Inhaler",
+    "category": "CREAM/TUBES/DROPS/SOLUTIONS",
+    "image": "",
+    "description": "",
+    "price": 20000,
+    "amount": 30
+  },
+  {
+    "id": 203,
+    "name": "Sediproct Cream ",
+    "category": "CREAM/TUBES/DROPS/SOLUTIONS",
+    "image": "",
+    "description": "",
+    "price": 15000,
+    "amount": 30
+  },
+  {
+    "id": 204,
+    "name": "Silverex",
+    "category": "CREAM/TUBES/DROPS/SOLUTIONS",
+    "image": "",
+    "description": "",
+    "price": 10000,
+    "amount": 30
+  },
+  {
+    "id": 205,
+    "name": "Skderm",
+    "category": "CREAM/TUBES/DROPS/SOLUTIONS",
+    "image": "",
+    "description": "",
+    "price": 6000,
+    "amount": 30
+  },
+  {
+    "id": 206,
+    "name": "Tetracycline Ointment ",
+    "category": "CREAM/TUBES/DROPS/SOLUTIONS",
+    "image": "",
+    "description": "",
+    "price": 4000,
+    "amount": 30
+  },
+  {
+    "id": 207,
+    "name": "Blood giving set",
+    "category": "Sundries",
+    "image": "",
+    "description": "",
+    "price": 2000,
+    "amount": 30
+  },
+  {
+    "id": 208,
+    "name": "Cannula - Blue ",
+    "category": "Sundries",
+    "image": "",
+    "description": "",
+    "price": 2000,
+    "amount": 30
+  },
+  {
+    "id": 209,
+    "name": "Cannula - Gray",
+    "category": "Sundries",
+    "image": "",
+    "description": "",
+    "price": 2000,
+    "amount": 30
+  },
+  {
+    "id": 210,
+    "name": "Cannula - Green",
+    "category": "Sundries",
+    "image": "",
+    "description": "",
+    "price": 2000,
+    "amount": 30
+  },
+  {
+    "id": 211,
+    "name": "Cannula - Pink",
+    "category": "Sundries",
+    "image": "",
+    "description": "",
+    "price": 2000,
+    "amount": 30
+  },
+  {
+    "id": 212,
+    "name": "Cannula - Yellow",
+    "category": "Sundries",
+    "image": "",
+    "description": "",
+    "price": 2000,
+    "amount": 30
+  },
+  {
+    "id": 213,
+    "name": "Corn plasters",
+    "category": "Sundries",
+    "image": "",
+    "description": "",
+    "price": 10000,
+    "amount": 30
+  },
+  {
+    "id": 214,
+    "name": "Cotton",
+    "category": "Sundries",
+    "image": "",
+    "description": "",
+    "price": 500,
+    "amount": 30
+  },
+  {
+    "id": 215,
+    "name": "Crepe Bandages 10cm",
+    "category": "Sundries",
+    "image": "",
+    "description": "",
+    "price": 3000,
+    "amount": 30
+  },
+  {
+    "id": 216,
+    "name": "Crepe Bandages 15cm",
+    "category": "Sundries",
+    "image": "",
+    "description": "",
+    "price": 5000,
+    "amount": 30
+  },
+  {
+    "id": 217,
+    "name": "Crepe Bandages 5cm",
+    "category": "Sundries",
+    "image": "",
+    "description": "",
+    "price": 2000,
+    "amount": 30
+  },
+  {
+    "id": 218,
+    "name": "Crepe Bandages 7.5cm",
+    "category": "Sundries",
+    "image": "",
+    "description": "",
+    "price": 2500,
+    "amount": 30
+  },
+  {
+    "id": 219,
+    "name": "Endotracheal Tubes",
+    "category": "Sundries",
+    "image": "",
+    "description": "",
+    "price": 15000,
+    "amount": 30
+  },
+  {
+    "id": 220,
+    "name": "Gauze (Sterilized)",
+    "category": "Sundries",
+    "image": "",
+    "description": "",
+    "price": 2000,
+    "amount": 30
+  },
+  {
+    "id": 221,
+    "name": "Giving Set",
+    "category": "Sundries",
+    "image": "",
+    "description": "",
+    "price": 1500,
+    "amount": 30
+  },
+  {
+    "id": 222,
+    "name": "Gloves - Examination/disposable",
+    "category": "Sundries",
+    "image": "",
+    "description": "",
+    "price": 1000,
+    "amount": 30
+  },
+  {
+    "id": 223,
+    "name": "Gloves - Surgical",
+    "category": "Sundries",
+    "image": "",
+    "description": "",
+    "price": 2500,
+    "amount": 30
+  },
+  {
+    "id": 224,
+    "name": "Iodine/Povidine",
+    "category": "Sundries",
+    "image": "",
+    "description": "",
+    "price": 0,
+    "amount": 30
+  },
+  {
+    "id": 225,
+    "name": "KY - Gel",
+    "category": "Sundries",
+    "image": "",
+    "description": "",
+    "price": 15000,
+    "amount": 30
+  },
+  {
+    "id": 226,
+    "name": "NG - Tube",
+    "category": "Sundries",
+    "image": "",
+    "description": "",
+    "price": 5000,
+    "amount": 30
+  },
+  {
+    "id": 227,
+    "name": "Plaster - medium",
+    "category": "Sundries",
+    "image": "",
+    "description": "",
+    "price": 8000,
+    "amount": 30
+  },
+  {
+    "id": 228,
+    "name": "Polythensheet (delivery sheet)",
+    "category": "Sundries",
+    "image": "",
+    "description": "",
+    "price": 5000,
+    "amount": 30
+  },
+  {
+    "id": 229,
+    "name": "Precept",
+    "category": "Sundries",
+    "image": "",
+    "description": "",
+    "price": 0,
+    "amount": 30
+  },
+  {
+    "id": 230,
+    "name": "Primapore 15cmx8cm",
+    "category": "Sundries",
+    "image": "",
+    "description": "",
+    "price": 5000,
+    "amount": 30
+  },
+  {
+    "id": 231,
+    "name": "Primapore 20cmx10cm",
+    "category": "Sundries",
+    "image": "",
+    "description": "",
+    "price": 8000,
+    "amount": 30
+  },
+  {
+    "id": 232,
+    "name": "Primapore 25cmx10cm",
+    "category": "Sundries",
+    "image": "",
+    "description": "",
+    "price": 10000,
+    "amount": 30
+  },
+  {
+    "id": 233,
+    "name": "Savlon",
+    "category": "Sundries",
+    "image": "",
+    "description": "",
+    "price": 0,
+    "amount": 30
+  },
+  {
+    "id": 234,
+    "name": "Surgical Blade",
+    "category": "Sundries",
+    "image": "",
+    "description": "",
+    "price": 1000,
+    "amount": 30
+  },
+  {
+    "id": 235,
+    "name": "Syringes 10mls",
+    "category": "Sundries",
+    "image": "",
+    "description": "",
+    "price": 600,
+    "amount": 30
+  },
+  {
+    "id": 236,
+    "name": "Syringes 20mls",
+    "category": "Sundries",
+    "image": "",
+    "description": "",
+    "price": 1000,
+    "amount": 30
+  },
+  {
+    "id": 237,
+    "name": "Syringes 2mls",
+    "category": "Sundries",
+    "image": "",
+    "description": "",
+    "price": 300,
+    "amount": 30
+  },
+  {
+    "id": 238,
+    "name": "Syringes 5mls",
+    "category": "Sundries",
+    "image": "",
+    "description": "",
+    "price": 500,
+    "amount": 30
+  },
+  {
+    "id": 239,
+    "name": "Urine Bag",
+    "category": "Sundries",
+    "image": "",
+    "description": "",
+    "price": 5000,
+    "amount": 30
+  },
+  {
+    "id": 240,
+    "name": "Urine Catheter",
+    "category": "Sundries",
+    "image": "",
+    "description": "",
+    "price": 5000,
+    "amount": 30
+  },
+  {
+    "id": 241,
+    "name": "Vaseline gauze",
+    "category": "Sundries",
+    "image": "",
+    "description": "",
+    "price": 5000,
+    "amount": 30
+  },
+  {
+    "id": 242,
+    "name": "Water for Injection",
+    "category": "Sundries",
+    "image": "",
+    "description": "",
+    "price": 300,
+    "amount": 30
   }
 ]
