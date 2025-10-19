@@ -175,6 +175,9 @@ app.get("/Order", (req, res) => {
   res.sendFile(path.join(__dirname, "Pages", "orders.html"));
 });
 
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, "Pages", "stock.html"));
+});
 
 const port = process.env.PORT || 3000;
 app.listen(PORT, () => {
