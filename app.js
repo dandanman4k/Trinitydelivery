@@ -2,6 +2,7 @@ const express = require("express");
 const app = express();
 const path = require("path");
 const bodyParser = require("body-parser");
+import { connectToDatabase } from "./api/lib/mongo.js";
 require('dotenv').config();
 const fs = require("fs");
 
@@ -88,83 +89,72 @@ const ordersFile = path.join(__dirname, "data", "orders.json");
 const stockFile = path.join(__dirname, "data", "stock.json");
 
 // Get all orders
-app.get("/api/orders", (req, res) => {
-  res.json(readJson(ordersFile));
-});
+const orders = db.collection("orders");
+await orders.find(), insertOne(), updateOne(), deleteOne()
 
-// GET orders for a specific customerID
-app.get("/api/orders/customer/:customerID", (req, res) => {
-  const orders = readJson(ordersFile);
-  const customerID = req.params.customerID;
+export default async function handler(req, res) {
+  const { db } = await connectToDatabase();
+  const orders = db.collection("orders");
+  const stock = db.collection("stock");
 
-  // Filter orders by customerID
-  const userOrders = orders.filter(order => order.customerID === customerID);
-
-  res.json(userOrders);
-});
-
-// Add new order
-app.post("/api/orders", (req, res) => {
-  const orders = readJson(ordersFile);
-  const newOrder = {
-    id: Date.now(),
-    customerName: req.body.customerName,
-    drug: req.body.drug,
-    amount: req.body.amount,
-    location: req.body.location,
-    phoneNumber: req.body.phoneNumber,
-    orderFilled: false,
-    customerID: req.body.customerID,
-  };
-  orders.push(newOrder);
-  writeJson(ordersFile, orders);
-  res.json(newOrder);
-});
-
-// Update order (edit details)
-app.put("/api/orders/:id", (req, res) => {
-  const orders = readJson(ordersFile);
-  const idx = orders.findIndex(o => o.id == req.params.id);
-  if (idx === -1) return res.status(404).json({ error: "Order not found" });
-
-  orders[idx] = { ...orders[idx], ...req.body };
-  writeJson(ordersFile, orders);
-  res.json(orders[idx]);
-});
-
-// Fill order
-app.put("/api/orders/:id/fill", (req, res) => {
-  const orders = readJson(ordersFile);
-  const stock = readJson(stockFile);
-
-  const order = orders.find(o => o.id == req.params.id);
-  if (!order) return res.status(404).json({ error: "Order not found" });
-  if (order.orderFilled) return res.status(400).json({ error: "Already filled" });
-
-  // ✅ match by stock ID
-  const drug = stock.find(s => Number(s.id) === Number(order.drug));
-  if (!drug) return res.status(400).json({ error: "Drug not found in stock" });
-
-  if (drug.amount < order.amount) {
-    return res.status(400).json({ error: "Not enough stock" });
+  if (req.method === "GET") {
+    // GET /api/orders or /api/orders?customerID=123
+    const { customerID } = req.query;
+    let result;
+    if (customerID) {
+      result = await orders.find({ customerID }).toArray();
+    } else {
+      result = await orders.find().toArray();
+    }
+    return res.json(result);
   }
 
-  drug.amount -= order.amount;
-  order.orderFilled = true;
+  if (req.method === "POST") {
+    const newOrder = {
+      id: Date.now(),
+      customerName: req.body.customerName,
+      drug: req.body.drug,
+      amount: req.body.amount,
+      location: req.body.location,
+      phoneNumber: req.body.phoneNumber,
+      orderFilled: false,
+      customerID: req.body.customerID,
+    };
+    await orders.insertOne(newOrder);
+    return res.status(201).json(newOrder);
+  }
 
-  writeJson(stockFile, stock);
-  writeJson(ordersFile, orders);
+  if (req.method === "PUT") {
+    const { id, fill } = req.query; // /api/orders?id=123&fill=true
+    if (!id) return res.status(400).json({ error: "Missing ID" });
 
-  res.json(order);
-});
+    const order = await orders.findOne({ id: Number(id) });
+    if (!order) return res.status(404).json({ error: "Order not found" });
 
-// Delete order
-app.delete("/api/orders/:id", (req, res) => {
-  let orders = readJson(ordersFile);
-  orders = orders.filter(o => o.id != req.params.id);
-  writeJson(ordersFile, orders);
-  res.json({ success: true });
-});
+    if (fill) {
+      const drug = await stock.findOne({ id: Number(order.drug) });
+      if (!drug) return res.status(400).json({ error: "Drug not found" });
+      if (drug.amount < order.amount)
+        return res.status(400).json({ error: "Not enough stock" });
+
+      await stock.updateOne({ id: Number(order.drug) }, { $inc: { amount: -order.amount } });
+      await orders.updateOne({ id: Number(id) }, { $set: { orderFilled: true } });
+      return res.json({ ...order, orderFilled: true });
+    } else {
+      await orders.updateOne({ id: Number(id) }, { $set: req.body });
+      const updated = await orders.findOne({ id: Number(id) });
+      return res.json(updated);
+    }
+  }
+
+  if (req.method === "DELETE") {
+    const { id } = req.query;
+    await orders.deleteOne({ id: Number(id) });
+    return res.json({ success: true });
+  }
+
+  res.status(405).json({ error: "Method not allowed" });
+}
 
 
 app.get("/Stock", (req, res) => {
