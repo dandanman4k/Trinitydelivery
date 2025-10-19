@@ -148,6 +148,7 @@ const enrichedOrders = orders.map(order => {
 // Initial load
 (async function init() {
   await loadStock();
+  loadOrders();
   setInterval(() => {
   loadOrders();
 }, 5000);
