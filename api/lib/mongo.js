@@ -16,7 +16,8 @@ export async function connectToDatabase() {
     throw new Error("❌ MONGO_URL not set in environment");
   }
 
-  client = new MongoClient(url, options);
+  process.env.NODE_TLS_REJECT_UNAUTHORIZED = "1"; // keep validation on
+  client = new MongoClient(url, { tlsAllowInvalidCertificates: false });
   await client.connect();
 
   db = client.db(process.env.MONGO_DB);
