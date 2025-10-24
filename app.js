@@ -1,44 +1,33 @@
-const express = require("express");
-const app = express();
-const path = require("path");
-const bodyParser = require("body-parser");
+// app.js
+import express from "express";
+import path from "path";
+import fs from "fs";
+import bodyParser from "body-parser";
+import dotenv from "dotenv";
+import { fileURLToPath } from "url";
 import { connectToDatabase } from "./api/lib/mongo.js";
-require('dotenv').config();
-const fs = require("fs");
 
-const dataFile = path.join(__dirname, "data", "stock.json");
-const orderData = path.join(__dirname, "data", "orders.json");
+dotenv.config();
+
+const app = express();
+
+// Fix __dirname in ES modules
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, "Pages")));
 
-// Utility: read/write JSON
+// --- Utility JSON readers (for local testing only) ---
+const dataFile = path.join(__dirname, "data", "stock.json");
 const readData = () => JSON.parse(fs.readFileSync(dataFile, "utf8"));
 const writeData = (data) => fs.writeFileSync(dataFile, JSON.stringify(data, null, 2));
 
-function readJson(file) {
-  try {
-    return JSON.parse(fs.readFileSync(file, "utf8"));
-  } catch (err) {
-    console.error("❌ Error reading file:", file, err);
-    return [];
-  }
-}
-
-function writeJson(file, data) {
-  try {
-    fs.writeFileSync(file, JSON.stringify(data, null, 2));
-  } catch (err) {
-    console.error("❌ Error writing file:", file, err);
-  }
-}
-
-// Get all items
+// --- Stock Routes ---
 app.get("/api/items", (req, res) => {
   res.json(readData());
 });
 
-// Add new item
 app.post("/api/items", (req, res) => {
   const items = readData();
   const newItem = {
@@ -48,35 +37,23 @@ app.post("/api/items", (req, res) => {
     price: req.body.price || 0,
     catagory: req.body.catagory,
     image: req.body.image,
-    description: req.body.description
+    description: req.body.description,
   };
   items.push(newItem);
   writeData(items);
   res.json(newItem);
 });
 
-// Update item
 app.put("/api/items/:id", (req, res) => {
   const items = readData();
   const itemIndex = items.findIndex((i) => i.id == req.params.id);
-
   if (itemIndex === -1) return res.status(404).json({ error: "Item not found" });
 
-  items[itemIndex] = {
-    ...items[itemIndex],
-    name: req.body.name,
-    amount: req.body.amount,
-    price: req.body.price,
-    catagory: req.body.catagory,
-    image: req.body.image,
-    description: req.body.description
-  };
-
+  items[itemIndex] = { ...items[itemIndex], ...req.body };
   writeData(items);
   res.json(items[itemIndex]);
 });
 
-// Delete item
 app.delete("/api/items/:id", (req, res) => {
   let items = readData();
   items = items.filter((i) => i.id != req.params.id);
@@ -84,92 +61,90 @@ app.delete("/api/items/:id", (req, res) => {
   res.json({ success: true });
 });
 
-// --- Orders Routes ---
-const ordersFile = path.join(__dirname, "data", "orders.json");
-const stockFile = path.join(__dirname, "data", "stock.json");
-
-// Get all orders
-const orders = db.collection("orders");
-
-
-export default async function handler(req, res) {
-  console.log("Connecting to MongoDB...");
-  const { db } = await connectToDatabase();
-  console.log("Connected to:", db.databaseName);
-
-  const orders = db.collection("orders");
-  const stock = db.collection("stock");
-
-  if (req.method === "GET") {
-    // GET /api/orders or /api/orders?customerID=123
+// --- MongoDB Orders API ---
+app.get("/api/orders", async (req, res) => {
+  try {
+    const { db } = await connectToDatabase();
+    const orders = db.collection("orders");
     const { customerID } = req.query;
-    let result;
-    if (customerID) {
-      result = await orders.find({ customerID }).toArray();
-    } else {
-      result = await orders.find().toArray();
-    }
-    return res.json(result);
-  }
+    const result = customerID
+      ? await orders.find({ customerID }).toArray()
+      : await orders.find().toArray();
+    res.json(result);
 
-  if (req.method === "POST") {
+  } catch (err) {
+    console.error("❌ GET /orders failed:", err);
+    res.status(500).json({ error: "Failed to fetch orders" });
+  }
+});
+
+app.post("/api/orders", async (req, res) => {
+  try {
+    const { db } = await connectToDatabase();
+    const orders = db.collection("orders");
     const newOrder = {
       id: Date.now(),
-      customerName: req.body.customerName,
-      drug: req.body.drug,
-      amount: req.body.amount,
-      location: req.body.location,
-      phoneNumber: req.body.phoneNumber,
+      ...req.body,
       orderFilled: false,
-      customerID: req.body.customerID,
     };
     await orders.insertOne(newOrder);
-    return res.status(201).json(newOrder);
+    res.status(201).json(newOrder);
+  } catch (err) {
+    console.error("❌ POST /orders failed:", err);
+    res.status(500).json({ error: "Failed to add order" });
   }
+});
 
-  if (req.method === "PUT") {
-    const { id, fill } = req.query; // /api/orders?id=123&fill=true
-    if (!id) return res.status(400).json({ error: "Missing ID" });
+app.put("/api/orders/:id/fill", async (req, res) => {
+  try {
+    const { db } = await connectToDatabase();
+    const orders = db.collection("orders");
+    const stock = db.collection("stock");
 
-    const order = await orders.findOne({ id: Number(id) });
+    const order = await orders.findOne({ id: Number(req.params.id) });
     if (!order) return res.status(404).json({ error: "Order not found" });
+    if (order.orderFilled) return res.status(400).json({ error: "Already filled" });
 
-    if (fill) {
-      const drug = await stock.findOne({ id: Number(order.drug) });
-      if (!drug) return res.status(400).json({ error: "Drug not found" });
-      if (drug.amount < order.amount)
-        return res.status(400).json({ error: "Not enough stock" });
+    const drug = await stock.findOne({ id: Number(order.drug) });
+    if (!drug) return res.status(400).json({ error: "Drug not found" });
+    if (drug.amount < order.amount)
+      return res.status(400).json({ error: "Not enough stock" });
 
-      await stock.updateOne({ id: Number(order.drug) }, { $inc: { amount: -order.amount } });
-      await orders.updateOne({ id: Number(id) }, { $set: { orderFilled: true } });
-      return res.json({ ...order, orderFilled: true });
-    } else {
-      await orders.updateOne({ id: Number(id) }, { $set: req.body });
-      const updated = await orders.findOne({ id: Number(id) });
-      return res.json(updated);
-    }
+    await stock.updateOne({ id: Number(order.drug) }, { $inc: { amount: -order.amount } });
+    await orders.updateOne({ id: Number(req.params.id) }, { $set: { orderFilled: true } });
+
+    res.json({ ...order, orderFilled: true });
+  } catch (err) {
+    console.error("❌ PUT /orders/:id/fill failed:", err);
+    res.status(500).json({ error: "Failed to fill order" });
   }
+});
 
-  if (req.method === "DELETE") {
-    const { id } = req.query;
-    await orders.deleteOne({ id: Number(id) });
-    return res.json({ success: true });
+app.delete("/api/orders/:id", async (req, res) => {
+  try {
+    const { db } = await connectToDatabase();
+    const orders = db.collection("orders");
+    await orders.deleteOne({ id: Number(req.params.id) });
+    res.json({ success: true });
+  } catch (err) {
+    console.error("❌ DELETE /orders/:id failed:", err);
+    res.status(500).json({ error: "Failed to delete order" });
   }
+});
 
-  res.status(405).json({ error: "Method not allowed" });
-}
-
-
+// --- Pages ---
 app.get("/Stock", (req, res) => {
   res.sendFile(path.join(__dirname, "Pages", "stock.html"));
 });
-
 app.get("/Order", (req, res) => {
   res.sendFile(path.join(__dirname, "Pages", "orders.html"));
 });
-
-app.get('/', (req, res) => {
+app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "Pages", "stock.html"));
 });
 
-module.exports = app;
+const PORT = process.env.PORT;
+app.listen(PORT, () => console.log(`✅ Server running on port ${PORT}`));
+
+
+export default app;
