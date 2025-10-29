@@ -20,16 +20,29 @@ app.use(express.static(path.join(__dirname, "Pages")));
 
 // --- Utility JSON readers (for local testing only) ---
 const dataFile = path.join(__dirname, "data", "stock.json");
-const readData = () => JSON.parse(fs.readFileSync(dataFile, "utf8"));
+//const readData = () => JSON.parse(fs.readFileSync(dataFile, "utf8"));
+async function readData() {
+  try{
+    const { db } = await connectToDatabase();
+    const stock = db.collection("stock"); 
+    const data = await stock.find({}).toArray();
+    return data;
+  } catch (err) {
+    console.error("❌ Failed to load stock from database", err);
+    return [];
+  }
+};
+
+
 const writeData = (data) => fs.writeFileSync(dataFile, JSON.stringify(data, null, 2));
 
 // --- Stock Routes ---
-app.get("/api/items", (req, res) => {
-  res.json(readData());
+app.get("/api/items", async (req, res) => {
+  res.json(await readData());
 });
 
-app.post("/api/items", (req, res) => {
-  const items = readData();
+app.post("/api/items", async (req, res) => {
+  const items = await readData();
   const newItem = {
     id: Date.now(),
     name: req.body.name,
@@ -44,8 +57,8 @@ app.post("/api/items", (req, res) => {
   res.json(newItem);
 });
 
-app.put("/api/items/:id", (req, res) => {
-  const items = readData();
+app.put("/api/items/:id", async (req, res) => {
+  const items = await readData();
   const itemIndex = items.findIndex((i) => i.id == req.params.id);
   if (itemIndex === -1) return res.status(404).json({ error: "Item not found" });
 
@@ -54,8 +67,8 @@ app.put("/api/items/:id", (req, res) => {
   res.json(items[itemIndex]);
 });
 
-app.delete("/api/items/:id", (req, res) => {
-  let items = readData();
+app.delete("/api/items/:id", async (req, res) => {
+  let items = await readData();
   items = items.filter((i) => i.id != req.params.id);
   writeData(items);
   res.json({ success: true });
