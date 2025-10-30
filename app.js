@@ -18,13 +18,11 @@ const __dirname = path.dirname(__filename);
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, "Pages")));
 
-// --- Utility JSON readers (for local testing only) ---
-const dataFile = path.join(__dirname, "data", "stock.json");
-//const readData = () => JSON.parse(fs.readFileSync(dataFile, "utf8"));
+// Read data from MongoDB
 async function readData() {
   try{
     const { db } = await connectToDatabase();
-    const stock = db.collection("stock"); 
+    const stock = db.collection("stock");
     const data = await stock.find({}).toArray();
     return data;
   } catch (err) {
@@ -34,44 +32,73 @@ async function readData() {
 };
 
 
-const writeData = (data) => fs.writeFileSync(dataFile, JSON.stringify(data, null, 2));
-
 // --- Stock Routes ---
 app.get("/api/items", async (req, res) => {
   res.json(await readData());
 });
 
 app.post("/api/items", async (req, res) => {
-  const items = await readData();
-  const newItem = {
-    id: Date.now(),
-    name: req.body.name,
-    amount: req.body.amount || 0,
-    price: req.body.price || 0,
-    catagory: req.body.catagory,
-    image: req.body.image,
-    description: req.body.description,
-  };
-  items.push(newItem);
-  writeData(items);
-  res.json(newItem);
+  try{
+    const { db } = await connectToDatabase();
+    const items = db.collection("stock");
+    const newItem = {
+      id: Date.now(),
+      name: req.body.name,
+      amount: req.body.amount || 0,
+      price: req.body.price || 0,
+      catagory: req.body.catagory,
+      image: req.body.image,
+      description: req.body.description,
+    };
+    await items.insertOne(newItem);
+    res.json(newItem);
+  } catch {
+    console.error("❌ POST /items failed:", err);
+    res.status(500).json({ error: "Failed to fetch items" });
+  }
 });
 
 app.put("/api/items/:id", async (req, res) => {
-  const items = await readData();
-  const itemIndex = items.findIndex((i) => i.id == req.params.id);
-  if (itemIndex === -1) return res.status(404).json({ error: "Item not found" });
+  try{
+    
+    const item = {
+      name: req.body.name,
+      amount: req.body.amount,
+      price: req.body.price,
+      catagory: req.body.catagory,
+      image: req.body.image,
+      description: req.body.description,
+    };
+    
+    const { db } = await connectToDatabase();
+    const items = db.collection("stock");
+    
+    await items.updateOne({ id: Number(req.params.id) }, { $set: {
+      name: req.body.name,
+      amount: req.body.amount,
+      price: req.body.price,
+      catagory: req.body.catagory,
+      image: req.body.image,
+      description: req.body.description,
+    }});
 
-  items[itemIndex] = { ...items[itemIndex], ...req.body };
-  writeData(items);
-  res.json(items[itemIndex]);
+    res.json(item);
+  } catch {
+    console.error("Error updating item:", error);
+    res.status(500).json({ error: "Failed to update item" });
+  }
 });
 
 app.delete("/api/items/:id", async (req, res) => {
-  let items = await readData();
-  items = items.filter((i) => i.id != req.params.id);
-  writeData(items);
+  try {
+  const { db } = await connectToDatabase();
+  const items = db.collection("stock");
+  await items.deleteOne({ id: Number(req.params.id) });
   res.json({ success: true });
+} catch (err) {
+  console.error("❌ DELETE /items/:id failed:", err);
+  res.status(500).json({ error: "Failed to delete items" });
+}
 });
 
 // --- MongoDB Orders API ---
