@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login | Trinity Delivery</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: "Poppins", sans-serif;
+    }
+
+    body {
+      background: linear-gradient(135deg, #0077ff, #00d4ff);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .login-container {
+      background: #fff;
+      padding: 2rem 2.5rem;
+      border-radius: 1.5rem;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+      width: 100%;
+      max-width: 380px;
+      text-align: center;
+      animation: fadeIn 0.7s ease-in-out;
+    }
+
+    .login-container h2 {
+      margin-bottom: 1.5rem;
+      color: #0077ff;
+      font-weight: 600;
+      font-size: 1.6rem;
+    }
+
+    .input-group {
+      text-align: left;
+      margin-bottom: 1rem;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 0.3rem;
+      color: #333;
+      font-weight: 500;
+      font-size: 0.9rem;
+    }
+
+    input {
+      width: 100%;
+      padding: 0.8rem;
+      border: 1px solid #ccc;
+      border-radius: 0.6rem;
+      font-size: 1rem;
+      outline: none;
+      transition: border-color 0.2s ease;
+    }
+
+    input:focus {
+      border-color: #0077ff;
+    }
+
+    button {
+      background: #0077ff;
+      color: white;
+      border: none;
+      padding: 0.9rem;
+      width: 100%;
+      border-radius: 0.6rem;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    button:hover {
+      background: #005fcc;
+      transform: translateY(-2px);
+    }
+
+    .footer-text {
+      margin-top: 1.2rem;
+      font-size: 0.85rem;
+      color: #555;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="login-container">
+    <h2>Login to Trinity Delivery</h2>
+    <form method="POST" action="/api/login">
+      <div class="input-group">
+        <label for="username">Username</label>
+        <input type="text" id="username" name="username" placeholder="Enter username" required />
+      </div>
+
+      <div class="input-group">
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" placeholder="Enter password" required />
+      </div>
+
+      <button type="submit">Login</button>
+    </form>
+    <p class="footer-text">© 2025 Trinity Delivery</p>
+  </div>
+</body>
+</html>

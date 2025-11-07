@@ -1,5 +1,7 @@
 // app.js
 import express from "express";
+import session from "express-session";
+import bcrypt from "bcrypt";
 import path from "path";
 import fs from "fs";
 import bodyParser from "body-parser";
@@ -10,6 +12,53 @@ import { connectToDatabase } from "./api/lib/mongo.js";
 dotenv.config();
 
 const app = express();
+
+function requireLogin(req, res, next) {
+  if (!req.session.user) {
+    return res.redirect("/login");
+  }
+  next();
+}
+
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(
+  session({
+    secret: "your-secret-key", // replace with something long/random
+    resave: false,
+    saveUninitialized: true,
+    cookie: { secure: false }, // set secure: true if using HTTPS
+  })
+);
+
+// Serve the login page
+app.get("/login", (req, res) => {
+  res.sendFile(path.join(__dirname, "Pages", "login.html"));
+});
+
+// Handle login POST request
+app.post("/api/login", async (req, res) => {
+  const { username, password } = req.body;
+
+  const { db } = await connectToDatabase();
+  
+  const user = await db.collection("users").findOne({ username });
+  
+  if (!user) return res.send("❌ Invalid username or password");
+  
+  const match = await bcrypt.compare(password, user.password);
+  console.log(match);
+  if (!match) return res.send("❌ Invalid username or password");
+
+  req.session.user = { username: user.username };
+  res.redirect("/Stock");
+});
+
+
+// Logout
+app.get("/logout", (req, res) => {
+  req.session.destroy(() => res.redirect("/login"));
+});
+
 
 // Fix __dirname in ES modules
 const __filename = fileURLToPath(import.meta.url);
@@ -173,13 +222,13 @@ app.delete("/api/orders/:id", async (req, res) => {
 });
 
 // --- Pages ---
-app.get("/Stock", (req, res) => {
+app.get("/Stock", requireLogin, (req, res) => {
   res.sendFile(path.join(__dirname, "Pages", "stock.html"));
 });
-app.get("/Order", (req, res) => {
+app.get("/Order", requireLogin, (req, res) => {
   res.sendFile(path.join(__dirname, "Pages", "orders.html"));
 });
-app.get("/", (req, res) => {
+app.get("/", requireLogin, (req, res) => {
   res.sendFile(path.join(__dirname, "Pages", "stock.html"));
 });
 
