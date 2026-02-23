@@ -3,11 +3,10 @@ import express from "express";
 import session from "express-session";
 import bcrypt from "bcrypt";
 import path from "path";
-import fs from "fs";
 import bodyParser from "body-parser";
 import dotenv from "dotenv";
 import { fileURLToPath } from "url";
-import { connectToDatabase } from "./api/lib/mongo.js";
+const {supabase} = require('./supabase/client');
 
 dotenv.config();
 
@@ -30,10 +29,7 @@ app.use(
   })
 );
 
-// Serve the login page
-app.get("/login", (req, res) => {
-  res.sendFile(path.join(__dirname, "Pages", "login.html"));
-});
+
 
 // Handle login POST request
 app.post("/api/login", async (req, res) => {
@@ -83,59 +79,59 @@ async function readData() {
 
 // --- Stock Routes ---
 app.get("/api/items", async (req, res) => {
-  res.json(await readData());
+
+  let { data: stock, error } = await supabase
+    .from('stock')
+    .select('*');
+
+  if (error) {
+    console.error('Error fetching Stock:', error);
+    res.json([]);
+  }
+
+  res.json(stock);
+
 });
 
 app.post("/api/items", async (req, res) => {
-  try{
-    const { db } = await connectToDatabase();
-    const items = db.collection("stock");
-    const newItem = {
-      id: Date.now(),
-      name: req.body.name,
-      amount: req.body.amount || 0,
-      price: req.body.price || 0,
-      catagory: req.body.catagory,
-      image: req.body.image,
-      description: req.body.description,
-    };
-    await items.insertOne(newItem);
-    res.json(newItem);
-  } catch {
-    console.error("❌ POST /items failed:", err);
-    res.status(500).json({ error: "Failed to fetch items" });
-  }
+    const { data, error } = await supabase
+      .from('stock')
+      .insert([
+        { name: req.body.name, amount: req.body.amount || 0, price: req.body.price || 0, catagory: req.body.catagory, image: req.body.image, description: req.body.description},
+      ])
+      .select();
+          
+
+    if (error) {
+    console.error('Failed To Insert New Item:', error);
+    res.json({});
+    }
+
+    res.json(data[0]);
 });
 
 app.put("/api/items/:id", async (req, res) => {
-  try{
-    
-    const item = {
+   
+  const { data, error } = await supabase
+    .from('stock')
+    .update({ 
       name: req.body.name,
       amount: req.body.amount,
       price: req.body.price,
       catagory: req.body.catagory,
       image: req.body.image,
-      description: req.body.description,
-    };
+      description: req.body.description
+    })
+    .eq('id', Number(req.params.id))
+    .select();
+          
     
-    const { db } = await connectToDatabase();
-    const items = db.collection("stock");
-    
-    await items.updateOne({ id: Number(req.params.id) }, { $set: {
-      name: req.body.name,
-      amount: req.body.amount,
-      price: req.body.price,
-      catagory: req.body.catagory,
-      image: req.body.image,
-      description: req.body.description,
-    }});
+    if (error) {
+    console.error('Failed To Update Row:', error);
+    res.json({});
+    }
 
-    res.json(item);
-  } catch {
-    console.error("Error updating item:", error);
-    res.status(500).json({ error: "Failed to update item" });
-  }
+    res.json(data[0]);
 });
 
 app.delete("/api/items/:id", async (req, res) => {
@@ -230,6 +226,10 @@ app.get("/Order", requireLogin, (req, res) => {
 });
 app.get("/", requireLogin, (req, res) => {
   res.sendFile(path.join(__dirname, "Pages", "stock.html"));
+});
+// Serve the login page
+app.get("/login", (req, res) => {
+  res.sendFile(path.join(__dirname, "Pages", "login.html"));
 });
 
 const PORT = process.env.PORT;
