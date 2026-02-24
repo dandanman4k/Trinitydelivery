@@ -7,7 +7,6 @@ const messageBox = document.getElementById("messageBox");
 
 const editModal = document.getElementById("editModal");
 const editCustomerName = document.getElementById("editCustomerName");
-const editDrug = document.getElementById("editDrug");
 const editAmount = document.getElementById("editAmount");
 const editLocation = document.getElementById("editLocation");
 const editPhone = document.getElementById("editPhone");
@@ -18,6 +17,8 @@ let ordersCache = [];
 let stockCache = [];
 let currentEditId = null;
 let showFilled = false;
+let editCustomerId = null;
+let editItem = null;
 
 /* ---------------- LOAD DATA ---------------- */
 
@@ -66,7 +67,7 @@ function applyFiltersAndSort() {
 
   // Attach stock info
   filtered = filtered.map(order => {
-    const product = stockCache.find(p => String(p.id) === String(order.drug));
+    const product = stockCache.find(p => String(p.id) === String(order.item));
     return {
       ...order,
       productName: product ? product.name : "Unknown",
@@ -120,25 +121,27 @@ window.editOrder = (id) => {
   currentEditId = id;
 
   editCustomerName.value = order.customerName;
-  editDrug.value = order.drug;
   editAmount.value = order.amount;
   editLocation.value = order.location;
   editPhone.value = order.phoneNumber;
+  editCustomerId = order.customerID;
+  editItem = order.item;
 
   editModal.style.display = "flex";
 };
 
 saveEditBtn.addEventListener("click", async () => {
-  await fetch(`/api/orders/${currentEditId}`, {
-    method: "PUT",
+  await fetch(`/api/orders`, {
+    method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
       id: currentEditId,
       customerName: editCustomerName.value,
-      drug: editDrug.value,
       amount: parseInt(editAmount.value, 10) || 0,
       location: editLocation.value,
-      phoneNumber: editPhone.value
+      phoneNumber: editPhone.value,
+      item: editItem,
+      customerId: editCustomerId
     })
   });
 

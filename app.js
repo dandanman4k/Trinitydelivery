@@ -28,7 +28,6 @@ app.post("/api/login",  async (req, res) => {
   });
 
   if (error) {
-    console.log(error);
     return res.send('<script>alert("'+error.message+'"); window.location.href = "/";</script>');
   }
 
@@ -152,25 +151,32 @@ app.delete("/api/items/:id", requireAuth("admin"), async (req, res) => {
 
 });
 
-// --- MongoDB Orders API Converting to Supabase---
+// --- Supabase Orders API ---
 app.get("/api/orders", async (req, res) => {
   const { customerID } = req.query;
   if(customerID) {
     let { data: orders, error } = await supabase
         .from('orders')
-        .select("customerID,"+customerID)
+        .select("customerID,"+customerID);
+    
+    if (error) {
+      console.error('Error fetching Orders:', error);
+      res.json([]);
+    }
+
+    res.json(orders);
   } else {
     let { data: orders, error } = await supabase
       .from('orders')
       .select('*');
-  }
 
-  if (error) {
-    console.error('Error fetching Orders:', error);
-    res.json([]);
-  }
+    if (error) {
+      console.error('Error fetching Orders:', error);
+      res.json([]);
+    }
 
-  res.json(orders);
+    res.json(orders);
+  }
 });
 
 app.post("/api/orders", async (req, res) => {
@@ -181,17 +187,21 @@ app.post("/api/orders", async (req, res) => {
   
   const { data: order, error } = await supabase
     .from('orders')
-    .update([
-      { amount: newOrder.amount },
-      { customerName: newOrder.customerName },
-      { location: newOrder.location },
-      { phoneNumber: newOrder.phoneNumber },
-      { orderFilled: newOrder.orderFilled }
-    ]).eq('id', newOrder.id)
+    .update(
+      { 
+      amount: newOrder.amount,
+      customerName: newOrder.customerName,
+      location: newOrder.location ,
+      phoneNumber: newOrder.phoneNumber,
+      orderFilled: newOrder.orderFilled,
+      item: newOrder.item,
+      customerID: newOrder.customerId
+      }
+    ).eq('id', newOrder.id)
     .select();
 
   if (error) {
-    console.error("❌ POST /orders failed:", err);
+    console.error("❌ POST /orders failed:", error);
     res.status(500).json({ error: "Failed to add order" });
   }
   
@@ -200,24 +210,28 @@ app.post("/api/orders", async (req, res) => {
 
 app.put("/api/orders/:id/fill", async (req, res) => {
 
-  let { data: item, error: orderCheck} = await supabase.from('orders').select('*').eq('id', id).single();
-  
+  let { data: item, error: orderCheck} = await supabase.from('orders').select('*').eq('id', req.params.id).single();
 
   if (orderCheck) {
     console.error('Order not found:', orderCheck);
     res.status(404).json({ error: "Order not found" });
   }
 
-  let {drug} = await supabase.from('stock').select('amount').eq('id', item.item).single();
+  let {data: drug, error: stockCheck} = await supabase.from('stock').select('amount').eq('id', item.item).single();
 
-  if (drug.amount < item.amount) {
-    res.status(404).json({ error: "Failed To Fill Amount Too High" });
+  if(stockCheck){
+    console.error('Failed to Get item:', stockCheck);
+    res.status(404).json({ error: "Failed To Find Item" });
+  } else {
+    if (drug.amount < item.amount) {
+      res.status(404).json({ error: "Failed To Fill Amount Too High" });
+    }
   }
 
   let {data: order, error: orderFill} = await supabase
   .from('orders')
   .update({ orderFilled: true })
-  .eq('id', id).single();
+  .eq('id', req.params.id).single();
 
   if (orderFill) {
     console.error('Failed to Update Order:', orderFill);
@@ -241,7 +255,7 @@ app.delete("/api/orders/:id", async (req, res) => {
   const { error } = await supabase
     .from('orders')
     .delete()
-    .eq('id', id);
+    .eq('id', req.params.id);
 
   if (error) {
     console.error('Failed To Delete row:', error);
