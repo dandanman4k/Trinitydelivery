@@ -12,10 +12,11 @@ require("dotenv").config();
 
 // Middleware
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(express.static(path.join(__dirname, "Pages")));
 app.use(cookieParser());
 app.use(express.json());
 
+// Serve static FIRST and without auth
+app.use(express.static(path.join(__dirname, "Pages")));
 
 // Handle login POST request
 app.post("/api/login",  async (req, res) => {
@@ -120,7 +121,7 @@ app.put("/api/items/:id", requireAuth("admin"), async (req, res) => {
       image: req.body.image,
       description: req.body.description
     })
-    .eq('id', Number(req.params.id))
+    .eq('id', req.params.id)
     .select();
           
     
@@ -129,6 +130,10 @@ app.put("/api/items/:id", requireAuth("admin"), async (req, res) => {
     res.json({});
     }
 
+    if (!data[0]){
+      console.log(data)
+      console.log(req.params.id)
+    }
     res.json(data[0]);
 });
 
@@ -225,9 +230,6 @@ app.get("/Stock", requireAuth("admin"), (req, res) => {
 app.get("/Order", requireAuth("admin"), (req, res) => {
   res.sendFile(path.join(__dirname, "Pages", "orders.html"));
 });
-app.get("/", requireAuth("admin"), (req, res) => {
-  res.sendFile(path.join(__dirname, "Pages", "stock.html"));
-});
 // Serve the login page
 app.get("/login", (req, res) => {
   res.sendFile(path.join(__dirname, "Pages", "login.html"));
@@ -235,6 +237,10 @@ app.get("/login", (req, res) => {
 // Serve the Signup page
 app.get("/signup", (req, res) => {
   res.sendFile(path.join(__dirname, "Pages", "signup.html"));
+});
+
+app.get("/", (req, res) => {
+  res.redirect("/login");
 });
 
 

@@ -40,8 +40,8 @@ function renderItems(items) {
         Price: ${item.price}
       </span>
       <div>
-        <button onclick="editItem(${item.id})">✏️</button>
-        <button onclick="deleteItem(${item.id})">🗑️</button>
+        <button onclick="editItem('${item.id}')">✏️</button>
+        <button onclick="deleteItem('${item.id}')">🗑️</button>
       </div>
     `;
 
