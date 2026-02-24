@@ -2,7 +2,7 @@
   "name": "trinitydelivery",
   "version": "1.0.0",
   "main": "app.js",
-  "type": "module",
+  "type": "commonjs",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node app.js"
@@ -12,12 +12,14 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "@supabase/supabase-js": "^2.97.0",
     "bcrypt": "^6.0.0",
     "body-parser": "^1.20.3",
+    "cookie-parser": "^1.4.7",
     "dotenv": "^17.2.3",
     "express": "^5.1.0",
     "express-session": "^1.18.2",
     "mongodb": "^6.20.0",
-    "supabase": "^2.76.12"
+    "supabase": "^2.76.13"
   }
 }

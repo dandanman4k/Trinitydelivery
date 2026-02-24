@@ -1,107 +1,192 @@
 const itemList = document.getElementById("itemList");
 const searchInput = document.getElementById("searchInput");
+const sortSelect = document.getElementById("sortSelect");
 const addItemBtn = document.getElementById("addItemBtn");
+const searchBy = document.getElementById("searchBy");
 
-const editModal = document.getElementById("editModal");
-const editName = document.getElementById("editName");
-const editAmount = document.getElementById("editAmount");
-const editPrice = document.getElementById("editPrice");
-const saveEditBtn = document.getElementById("saveEditBtn");
-const cancelEditBtn = document.getElementById("cancelEditBtn");
+const itemModal = document.getElementById("itemModal");
+const modalTitle = document.getElementById("modalTitle");
 
-let currentEditId = null;
-let currentEditCatagory = null;
-let currentEditImage = null;
-let currentEditDescription = null;
+const itemName = document.getElementById("itemName");
+const itemAmount = document.getElementById("itemAmount");
+const itemPrice = document.getElementById("itemPrice");
+const itemCategory = document.getElementById("itemCategory");
+const itemDescription = document.getElementById("itemDescription");
+const itemImage = document.getElementById("itemImage");
 
-// Fetch and render items
+const saveItemBtn = document.getElementById("saveItemBtn");
+const cancelItemBtn = document.getElementById("cancelItemBtn");
+
+let itemsData = [];
+let editingId = null;
+let uploadedImageUrl = null;
+
 async function loadItems() {
   const res = await fetch("/api/items");
-  const items = await res.json();
-  renderItems(items);
+  itemsData = await res.json();
+  applyFiltersAndSort();
 }
 
 function renderItems(items) {
   itemList.innerHTML = "";
+
   items.forEach(item => {
     const li = document.createElement("li");
+
     li.innerHTML = `
-      <span>${item.name} (${item.amount}) Price:${item.price}</span>
+      <span>
+        ${item.name} | ${item.category} |
+        Amount: ${item.amount} |
+        Price: ${item.price}
+      </span>
       <div>
-        <button onclick="editItem(${item.id}, '${item.name}', ${item.amount}, ${item.price}, '${item.catagory}', '${item.image}', '${item.description}' )">✏️ Edit</button>
-        <button onclick="deleteItem(${item.id})">🗑️ Delete</button>
+        <button onclick="editItem(${item.id})">✏️</button>
+        <button onclick="deleteItem(${item.id})">🗑️</button>
       </div>
     `;
+
     itemList.appendChild(li);
   });
 }
 
-// Add item
-addItemBtn.addEventListener("click", async () => {
-  const name = prompt("Enter item name:");
-  const amount = parseInt(prompt("Enter amount:"), 10) || 0;
-  const price = parseInt(prompt("Enter Price:"), 10) || 0;
-  const catagory = prompt("Enter item name:");
-  const image = "null";
-  const description = prompt("Enter item name:");
+function applyFiltersAndSort() {
+  let filtered = [...itemsData];
 
-  if (name) {
+  const searchTerm = searchInput.value.toLowerCase();
+  const searchField = searchBy.value;
+
+  if (searchTerm) {
+  filtered = filtered.filter(item => {
+
+    if (searchField === "all") {
+      return Object.values(item).some(val =>
+        String(val).toLowerCase().includes(searchTerm)
+      );
+    }
+
+    return String(item[searchField] || "")
+      .toLowerCase()
+      .includes(searchTerm);
+  });
+}
+
+  const sortValue = sortSelect.value;
+
+  switch (sortValue) {
+    case "name_asc":
+      filtered.sort((a, b) => a.name.localeCompare(b.name));
+      break;
+    case "price_asc":
+      filtered.sort((a, b) => a.price - b.price);
+      break;
+    case "price_desc":
+      filtered.sort((a, b) => b.price - a.price);
+      break;
+    case "amount_asc":
+      filtered.sort((a, b) => a.amount - b.amount);
+      break;
+    case "amount_desc":
+      filtered.sort((a, b) => b.amount - a.amount);
+      break;
+  }
+
+  renderItems(filtered);
+}
+
+/* ---------- Modal Controls ---------- */
+
+addItemBtn.addEventListener("click", () => {
+  editingId = null;
+  uploadedImageUrl = null;
+  modalTitle.textContent = "Add Item";
+  itemModal.style.display = "flex";
+});
+
+cancelItemBtn.addEventListener("click", () => {
+  itemModal.style.display = "none";
+});
+
+/* ---------- Save Item ---------- */
+
+saveItemBtn.addEventListener("click", async () => {
+  let imageUrl = uploadedImageUrl;
+
+  if (itemImage.files.length > 0) {
+    const formData = new FormData();
+    formData.append("image", itemImage.files[0]);
+
+    const uploadRes = await fetch("/api/upload", {
+      method: "POST",
+      body: formData
+    });
+
+    const uploadData = await uploadRes.json();
+    imageUrl = uploadData.url || "test";
+  }
+
+  const payload = {
+    name: itemName.value,
+    amount: parseInt(itemAmount.value, 10) || 0,
+    price: parseInt(itemPrice.value, 10) || 0,
+    category: itemCategory.value,
+    description: itemDescription.value,
+    image: imageUrl
+  };
+
+  if (editingId) {
+    await fetch(`/api/items/${editingId}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload)
+    });
+  } else {
     await fetch("/api/items", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ name, amount, price, catagory, image, description })
+      body: JSON.stringify(payload)
     });
-    loadItems();
   }
-});
 
-// Edit item
-window.editItem = (id, name, amount, price, catagory, image, description) => {
-  currentEditId = id;
-  currentEditCatagory = catagory;
-  currentEditImage = image;
-  currentEditDescription = description;
-  editName.value = name;
-  editAmount.value = amount;
-  editPrice.value = price;
-  editModal.style.display = "flex";
-};
-
-saveEditBtn.addEventListener("click", async () => {
-  await fetch(`/api/items/${currentEditId}`, {
-    method: "PUT",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      name: editName.value,
-      amount: parseInt(editAmount.value, 10) || 0,
-      price: parseInt(editPrice.value, 10) || 0,
-      catagory: currentEditCatagory,
-      image: currentEditImage,
-      description: currentEditDescription
-    })
-  });
-  editModal.style.display = "none";
+  itemModal.style.display = "none";
   loadItems();
 });
 
-cancelEditBtn.addEventListener("click", () => {
-  editModal.style.display = "none";
-});
+/* ---------- Edit ---------- */
 
-// Delete item
+window.editItem = (id) => {
+  const item = itemsData.find(i => String(i.id) === String(id));
+  if (!item) {
+    console.log("Item not found for ID:", id);
+    return;
+  }
+
+  editingId = id;
+  uploadedImageUrl = item.image;
+
+  modalTitle.textContent = "Edit Item";
+
+  itemName.value = item.name;
+  itemAmount.value = item.amount;
+  itemPrice.value = item.price;
+  itemCategory.value = item.category;
+  itemDescription.value = item.description;
+
+  itemModal.style.display = "flex";
+};
+
+/* ---------- Delete ---------- */
+
 window.deleteItem = async (id) => {
   await fetch(`/api/items/${id}`, { method: "DELETE" });
   loadItems();
 };
 
-// Search filter
-searchInput.addEventListener("keyup", async () => {
-  const res = await fetch("/api/items");
-  let items = await res.json();
-  const filter = searchInput.value.toLowerCase();
-  items = items.filter(i => i.name.toLowerCase().includes(filter));
-  renderItems(items);
-});
+/* ---------- Search + Sort ---------- */
 
-// Initial load
+searchInput.addEventListener("input", applyFiltersAndSort);
+sortSelect.addEventListener("change", applyFiltersAndSort);
+searchBy.addEventListener("change", applyFiltersAndSort);
+
+/* ---------- Init ---------- */
+
 loadItems();

@@ -2,7 +2,6 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Stock</title>
   <link rel="stylesheet" href="styles.css">
 </head>
@@ -14,30 +13,70 @@
     <a href="/Order">Orders</a>
   </div>
 
-<!-- Content -->
-  <div class="content">
-    <div class="search-container">
-      <input type="text" id="searchInput" placeholder="Search items...">
-    </div>
+<div class="content">
+<div class="search-container">
+  <div class="search-row">
+    <input type="text" id="searchInput" placeholder="Search...">
 
-    <button id="addItemBtn">➕ Add Item</button>
+    <select id="searchBy">
+      <option value="all">All Columns</option>
+      <option value="name">Name</option>
+      <option value="category">Category</option>
+      <option value="price">Price</option>
+      <option value="amount">Amount</option>
+      <option value="description">Description</option>
+    </select>
 
-    <ul id="itemList"></ul>
+    <select id="sortSelect">
+      <option value="">Sort By</option>
+      <option value="name_asc">Name (A-Z)</option>
+      <option value="price_asc">Price (Low-High)</option>
+      <option value="price_desc">Price (High-Low)</option>
+      <option value="amount_asc">Amount (Low-High)</option>
+      <option value="amount_desc">Amount (High-Low)</option>
+    </select>
   </div>
 
-  <!-- Edit Modal -->
-  <div id="editModal" class="modal" style="display:none;">
-    <div class="modal-content">
-      <h2>Edit Item</h2>
-      <input type="text" id="editName" placeholder="Item name">
-      <input type="number" id="editAmount" placeholder="Amount">
-      <input type="number" id="editPrice" placeholder="Price">
-      <button id="saveEditBtn">💾 Save</button>
-      <button id="cancelEditBtn">❌ Cancel</button>
-    </div>
+  <button id="addItemBtn">➕ Add Item</button>
+
+  <ul id="itemList"></ul>
+</div>
+</div>
+
+  <!-- Add / Edit Modal -->
+<div id="itemModal" class="modal" style="display:none;">
+  <div class="modal-content">
+    <h2 id="modalTitle">Add Item</h2>
+
+    <form id="itemForm" class="vertical-form">
+
+      <label>Name</label>
+      <input type="text" id="itemName">
+
+      <label>Amount</label>
+      <input type="number" id="itemAmount">
+
+      <label>Price</label>
+      <input type="number" id="itemPrice">
+
+      <label>Category</label>
+      <input type="text" id="itemCategory">
+
+      <label>Description</label>
+      <textarea id="itemDescription"></textarea>
+
+      <label>Image</label>
+      <input type="file" id="itemImage">
+
+      <div class="modal-buttons">
+        <button type="button" id="saveItemBtn">💾 Save</button>
+        <button type="button" id="cancelItemBtn">❌ Cancel</button>
+      </div>
+
+    </form>
   </div>
+</div>
 
   <script src="/script.js"></script>
-
 </body>
 </html>

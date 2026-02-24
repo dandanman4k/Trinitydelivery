@@ -1,54 +1,70 @@
-// app.js
-import express from "express";
-import session from "express-session";
-import bcrypt from "bcrypt";
-import path from "path";
-import bodyParser from "body-parser";
-import dotenv from "dotenv";
-import { fileURLToPath } from "url";
+
+const express = require("express");
+const path = require("path");
 const {supabase} = require('./supabase/client');
-
-dotenv.config();
-
 const app = express();
+const PORT = process.env.PORT;
+const requireAuth = require("./middleware/auth");
+const cookieParser = require("cookie-parser");
+const bodyParser = require("body-parser");
+require("dotenv").config();
 
-function requireLogin(req, res, next) {
-  if (!req.session.user) {
-    return res.redirect("/login");
-  }
-  next();
-}
 
+// Middleware
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(
-  session({
-    secret: "your-secret-key", // replace with something long/random
-    resave: false,
-    saveUninitialized: true,
-    cookie: { secure: false }, // set secure: true if using HTTPS
-  })
-);
-
+app.use(express.static(path.join(__dirname, "Pages")));
+app.use(cookieParser());
+app.use(express.json());
 
 
 // Handle login POST request
-app.post("/api/login", async (req, res) => {
-  const { username, password } = req.body;
+app.post("/api/login",  async (req, res) => {
+  const { email, password } = req.body;
 
-  const { db } = await connectToDatabase();
-  
-  const user = await db.collection("users").findOne({ username });
-  
-  if (!user) return res.send("❌ Invalid username or password");
-  
-  const match = await bcrypt.compare(password, user.password);
-  console.log(match);
-  if (!match) return res.send("❌ Invalid username or password");
+  const { data, error } = await supabase.auth.signInWithPassword({
+    email,
+    password
+  });
 
-  req.session.user = { username: user.username };
+  if (error) {
+    console.log(error);
+    return res.send('<script>alert("'+error.message+'"); window.location.href = "/";</script>');
+  }
+
+  if (!data?.session) {
+    return res.send('<script>alert("No session found. Please verify your email."); window.location.href = "/";</script>');
+  }
+
+  res.cookie("sb_token", data.session.access_token, {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production",
+    sameSite: "lax"
+  });
   res.redirect("/Stock");
 });
 
+// Signup endpoint
+app.post("/api/signup", async (req, res) => {
+  const { email , password } = req.body;
+
+  const { data, error } = await supabase.auth.signUp({
+    email,
+    password
+  });
+
+  if (error) {
+    console.log(error);
+    res.status(302).redirect("/signup"); 
+  }
+
+  res.cookie("sb_token", data.session.access_token, {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production",
+    sameSite: "lax"
+  });
+
+  res.redirect("/Stock");
+});
 
 // Logout
 app.get("/logout", (req, res) => {
@@ -56,29 +72,11 @@ app.get("/logout", (req, res) => {
 });
 
 
-// Fix __dirname in ES modules
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
 
-app.use(bodyParser.json());
-app.use(express.static(path.join(__dirname, "Pages")));
-
-// Read data from MongoDB
-async function readData() {
-  try{
-    const { db } = await connectToDatabase();
-    const stock = db.collection("stock");
-    const data = await stock.find({}).toArray();
-    return data;
-  } catch (err) {
-    console.error("❌ Failed to load stock from database", err);
-    return [];
-  }
-};
 
 
 // --- Stock Routes ---
-app.get("/api/items", async (req, res) => {
+app.get("/api/items", requireAuth("admin"), async (req, res) => {
 
   let { data: stock, error } = await supabase
     .from('stock')
@@ -93,11 +91,11 @@ app.get("/api/items", async (req, res) => {
 
 });
 
-app.post("/api/items", async (req, res) => {
+app.post("/api/items", requireAuth("admin"), async (req, res) => {
     const { data, error } = await supabase
       .from('stock')
       .insert([
-        { name: req.body.name, amount: req.body.amount || 0, price: req.body.price || 0, catagory: req.body.catagory, image: req.body.image, description: req.body.description},
+        { name: req.body.name, amount: req.body.amount || 0, price: req.body.price || 0, category: req.body.category, image: req.body.image, description: req.body.description},
       ])
       .select();
           
@@ -106,11 +104,11 @@ app.post("/api/items", async (req, res) => {
     console.error('Failed To Insert New Item:', error);
     res.json({});
     }
-
+    console.log(data);
     res.json(data[0]);
 });
 
-app.put("/api/items/:id", async (req, res) => {
+app.put("/api/items/:id", requireAuth("admin"), async (req, res) => {
    
   const { data, error } = await supabase
     .from('stock')
@@ -118,7 +116,7 @@ app.put("/api/items/:id", async (req, res) => {
       name: req.body.name,
       amount: req.body.amount,
       price: req.body.price,
-      catagory: req.body.catagory,
+      category: req.body.category,
       image: req.body.image,
       description: req.body.description
     })
@@ -134,19 +132,22 @@ app.put("/api/items/:id", async (req, res) => {
     res.json(data[0]);
 });
 
-app.delete("/api/items/:id", async (req, res) => {
-  try {
-  const { db } = await connectToDatabase();
-  const items = db.collection("stock");
-  await items.deleteOne({ id: Number(req.params.id) });
+app.delete("/api/items/:id", requireAuth("admin"), async (req, res) => {
+  const { error } = await supabase
+    .from('stock')
+    .delete()
+    .eq('id', req.params.id);
+  
+  if (error) {
+  console.error('Failed To Delete row:', error);
+  res.json({ success: false });
+  }
+
   res.json({ success: true });
-} catch (err) {
-  console.error("❌ DELETE /items/:id failed:", err);
-  res.status(500).json({ error: "Failed to delete items" });
-}
+
 });
 
-// --- MongoDB Orders API ---
+// --- MongoDB Orders API Converting to Supabase---
 app.get("/api/orders", async (req, res) => {
   try {
     const { db } = await connectToDatabase();
@@ -218,22 +219,26 @@ app.delete("/api/orders/:id", async (req, res) => {
 });
 
 // --- Pages ---
-app.get("/Stock", requireLogin, (req, res) => {
+app.get("/Stock", requireAuth("admin"), (req, res) => {
   res.sendFile(path.join(__dirname, "Pages", "stock.html"));
 });
-app.get("/Order", requireLogin, (req, res) => {
+app.get("/Order", requireAuth("admin"), (req, res) => {
   res.sendFile(path.join(__dirname, "Pages", "orders.html"));
 });
-app.get("/", requireLogin, (req, res) => {
+app.get("/", requireAuth("admin"), (req, res) => {
   res.sendFile(path.join(__dirname, "Pages", "stock.html"));
 });
 // Serve the login page
 app.get("/login", (req, res) => {
   res.sendFile(path.join(__dirname, "Pages", "login.html"));
 });
+// Serve the Signup page
+app.get("/signup", (req, res) => {
+  res.sendFile(path.join(__dirname, "Pages", "signup.html"));
+});
 
-const PORT = process.env.PORT;
+
 app.listen(PORT, () => console.log(`✅ Server running on port ${PORT}`));
 
 
-export default app;
+module.exports = app;
