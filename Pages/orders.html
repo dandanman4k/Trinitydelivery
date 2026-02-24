@@ -16,12 +16,33 @@
 
 <!-- Content -->
   <div class="content">
-    <div class="search-container">
-      <input type="text" id="searchInput" placeholder="Search items...">
-    </div>
+  <div class="search-container">
+    <div class="search-row">
+      <input type="text" id="searchInput" placeholder="Search...">
 
-    <ul id="itemList"></ul>
+      <select id="searchBy">
+        <option value="all">All</option>
+        <option value="customerName">Customer</option>
+        <option value="productName">Product</option>
+        <option value="location">Location</option>
+        <option value="phoneNumber">Phone</option>
+      </select>
+
+      <select id="sortSelect">
+        <option value="">Sort By</option>
+        <option value="name_asc">Customer (A-Z)</option>
+        <option value="amount_asc">Amount (Low-High)</option>
+        <option value="amount_desc">Amount (High-Low)</option>
+        <option value="status">Filled Status</option>
+      </select>
+    </div>
   </div>
+
+  <button id="toggleFilledBtn">Show Filled Orders</button>
+
+  <div id="messageBox" class="message-box" style="display:none;"></div>
+  <ul id="itemList"></ul>
+</div>
 
   <!-- Edit Modal -->
 <div id="editModal" class="modal" style="display:none;">

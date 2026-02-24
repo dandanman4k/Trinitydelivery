@@ -154,73 +154,101 @@ app.delete("/api/items/:id", requireAuth("admin"), async (req, res) => {
 
 // --- MongoDB Orders API Converting to Supabase---
 app.get("/api/orders", async (req, res) => {
-  try {
-    const { db } = await connectToDatabase();
-    const orders = db.collection("orders");
-    const { customerID } = req.query;
-    const result = customerID
-      ? await orders.find({ customerID }).toArray()
-      : await orders.find().toArray();
-    res.json(result);
-
-  } catch (err) {
-    console.error("❌ GET /orders failed:", err);
-    res.status(500).json({ error: "Failed to fetch orders" });
+  const { customerID } = req.query;
+  if(customerID) {
+    let { data: orders, error } = await supabase
+        .from('orders')
+        .select("customerID,"+customerID)
+  } else {
+    let { data: orders, error } = await supabase
+      .from('orders')
+      .select('*');
   }
+
+  if (error) {
+    console.error('Error fetching Orders:', error);
+    res.json([]);
+  }
+
+  res.json(orders);
 });
 
 app.post("/api/orders", async (req, res) => {
-  try {
-    const { db } = await connectToDatabase();
-    const orders = db.collection("orders");
-    const newOrder = {
-      id: Date.now(),
+  const newOrder = {
       ...req.body,
       orderFilled: false,
     };
-    await orders.insertOne(newOrder);
-    res.status(201).json(newOrder);
-  } catch (err) {
+  
+  const { data: order, error } = await supabase
+    .from('orders')
+    .update([
+      { amount: newOrder.amount },
+      { customerName: newOrder.customerName },
+      { location: newOrder.location },
+      { phoneNumber: newOrder.phoneNumber },
+      { orderFilled: newOrder.orderFilled }
+    ]).eq('id', newOrder.id)
+    .select();
+
+  if (error) {
     console.error("❌ POST /orders failed:", err);
     res.status(500).json({ error: "Failed to add order" });
   }
+  
+  res.status(201).json(order);
 });
 
 app.put("/api/orders/:id/fill", async (req, res) => {
-  try {
-    const { db } = await connectToDatabase();
-    const orders = db.collection("orders");
-    const stock = db.collection("stock");
 
-    const order = await orders.findOne({ id: Number(req.params.id) });
-    if (!order) return res.status(404).json({ error: "Order not found" });
-    if (order.orderFilled) return res.status(400).json({ error: "Already filled" });
+  let { data: item, error: orderCheck} = await supabase.from('orders').select('*').eq('id', id).single();
+  
 
-    const drug = await stock.findOne({ id: Number(order.drug) });
-    if (!drug) return res.status(400).json({ error: "Drug not found" });
-    if (drug.amount < order.amount)
-      return res.status(400).json({ error: "Not enough stock" });
-
-    await stock.updateOne({ id: Number(order.drug) }, { $inc: { amount: -order.amount } });
-    await orders.updateOne({ id: Number(req.params.id) }, { $set: { orderFilled: true } });
-
-    res.json({ ...order, orderFilled: true });
-  } catch (err) {
-    console.error("❌ PUT /orders/:id/fill failed:", err);
-    res.status(500).json({ error: "Failed to fill order" });
+  if (orderCheck) {
+    console.error('Order not found:', orderCheck);
+    res.status(404).json({ error: "Order not found" });
   }
+
+  let {drug} = await supabase.from('stock').select('amount').eq('id', item.item).single();
+
+  if (drug.amount < item.amount) {
+    res.status(404).json({ error: "Failed To Fill Amount Too High" });
+  }
+
+  let {data: order, error: orderFill} = await supabase
+  .from('orders')
+  .update({ orderFilled: true })
+  .eq('id', id).single();
+
+  if (orderFill) {
+    console.error('Failed to Update Order:', orderFill);
+    res.status(404).json({ error: "Failed to Update Order" });
+  }
+
+  let {error: stockUpdate} = await supabase
+  .from('stock')
+  .update({ amount: drug.amount - item.amount })
+  .eq('id', item.item);
+
+  if (stockUpdate) {
+    console.error('Failed to Update Order:', stockUpdate);
+    res.status(404).json({ error: "Failed to Update Order" });
+  }
+
+  res.json(order);
 });
 
 app.delete("/api/orders/:id", async (req, res) => {
-  try {
-    const { db } = await connectToDatabase();
-    const orders = db.collection("orders");
-    await orders.deleteOne({ id: Number(req.params.id) });
-    res.json({ success: true });
-  } catch (err) {
-    console.error("❌ DELETE /orders/:id failed:", err);
-    res.status(500).json({ error: "Failed to delete order" });
+  const { error } = await supabase
+    .from('orders')
+    .delete()
+    .eq('id', id);
+
+  if (error) {
+    console.error('Failed To Delete row:', error);
+    res.json({ success: false });
   }
+
+  res.json({ success: true });
 });
 
 // --- Pages ---
